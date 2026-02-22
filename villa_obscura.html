@@ -1,0 +1,2859 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VILLA OBSCURA — A Herança Maldita</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=IM+Fell+English:ital@0;1&display=swap');
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;height:100%}
+body{
+  background:#06050a;
+  color:#e0d4be;
+  font-family:'Cormorant Garamond',serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse at 20% 15%,rgba(160,100,20,.08) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 85%,rgba(80,10,120,.10) 0%,transparent 55%),
+    radial-gradient(ellipse at 50% 50%,rgba(10,5,25,.6) 0%,transparent 80%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='500' height='500' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+:root{
+  --bg:#06050a;
+  --paper:#0e0c14;
+  --paper2:#131020;
+  --paper3:#181428;
+  --paper4:#1e1930;
+  --gold:#c49030;
+  --gold2:#e0b050;
+  --gold3:#f8d880;
+  --gold4:rgba(196,144,48,.12);
+  --purple:#6020a0;
+  --purple2:#8030c0;
+  --red:#8a1818;
+  --red2:#c02828;
+  --red3:#e04040;
+  --ink:#e0d4be;
+  --ink2:#a89870;
+  --ink3:#70604a;
+  --ink4:#3a3020;
+  --border:rgba(196,144,48,.18);
+  --border2:rgba(196,144,48,.08);
+  --border3:rgba(196,144,48,.38);
+  /* character colors */
+  --c-pollyana:#c84820;
+  --c-carluz:#d49010;
+  --c-eros:#9030c0;
+  --c-stephany:#2070c0;
+  --c-mary:#209060;
+  --c-mel:#c02858;
+  --c-joy:#e05010;
+  --c-ellie:#308090;
+}
+
+/* ═══════════════════════════════════════════
+   SPLASH SCREEN
+═══════════════════════════════════════════ */
+#splash{
+  position:fixed;inset:0;z-index:300;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg);
+  overflow-y:auto;
+  padding:20px;
+}
+
+.splash-wrap{
+  max-width:780px;width:100%;
+  text-align:center;
+  position:relative;
+}
+
+.splash-frame-outer{
+  border:1px solid rgba(196,144,48,.28);
+  padding:5px;
+  background:linear-gradient(135deg,rgba(196,144,48,.08),transparent 40%,rgba(128,30,200,.06));
+}
+.splash-frame-inner{
+  border:1px solid rgba(196,144,48,.12);
+  padding:64px 80px 56px;
+  background:var(--paper);
+  position:relative;
+}
+@media(max-width:640px){.splash-frame-inner{padding:40px 24px 36px}}
+
+.sp-corner{position:absolute;width:32px;height:32px;border-color:var(--gold);border-style:solid;}
+.sp-corner.tl{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.sp-corner.tr{top:-1px;right:-1px;border-width:2px 2px 0 0}
+.sp-corner.bl{bottom:-1px;left:-1px;border-width:0 0 2px 2px}
+.sp-corner.br{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+
+.sp-eyebrow{
+  font-family:'Cinzel',serif;
+  font-size:10px;letter-spacing:12px;
+  color:rgba(196,144,48,.5);
+  margin-bottom:28px;
+  text-transform:uppercase;
+}
+
+.sp-title-top{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(48px,11vw,96px);
+  font-weight:900;
+  line-height:1;
+  letter-spacing:8px;
+  background:linear-gradient(180deg,var(--gold3) 0%,var(--gold) 55%,#7a5010 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  margin-bottom:0;
+}
+.sp-title-bottom{
+  font-family:'Cinzel',serif;
+  font-size:clamp(14px,3vw,22px);
+  letter-spacing:22px;
+  color:rgba(160,120,40,.6);
+  margin-bottom:10px;
+}
+
+.sp-subtitle{
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:clamp(16px,3vw,21px);
+  color:var(--gold2);
+  letter-spacing:3px;
+  margin-bottom:4px;
+}
+
+.sp-divider{
+  display:flex;align-items:center;gap:14px;
+  margin:28px auto;
+  max-width:460px;
+}
+.sp-divider::before,.sp-divider::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(to right,transparent,rgba(196,144,48,.4),transparent);
+}
+.sp-divider-icon{
+  font-size:10px;color:var(--gold);opacity:.7;
+  font-family:'Cinzel',serif;
+  letter-spacing:4px;
+}
+
+.sp-premise{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(15px,2.5vw,17px);
+  line-height:2.1;
+  color:var(--ink2);
+  font-style:italic;
+  margin-bottom:16px;
+  max-width:580px;
+  margin-left:auto;margin-right:auto;
+}
+.sp-premise strong{color:var(--ink);font-style:normal}
+
+.sp-cast{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  margin-bottom:36px;
+}
+.sp-cast-tag{
+  font-family:'Cinzel',serif;
+  font-size:9px;letter-spacing:3px;
+  padding:6px 14px;
+  border:1px solid var(--border);
+  color:var(--ink3);
+  background:rgba(255,255,255,.02);
+}
+
+.sp-mechanics{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;margin-bottom:36px;text-align:left;
+}
+.sp-mech{
+  padding:14px 16px;
+  border:1px solid var(--border2);
+  background:rgba(255,255,255,.02);
+}
+.sp-mech-icon{font-size:20px;margin-bottom:8px}
+.sp-mech-title{
+  font-family:'Cinzel',serif;
+  font-size:9px;letter-spacing:3px;color:var(--gold);
+  margin-bottom:4px;
+}
+.sp-mech-text{font-size:12px;color:var(--ink3);line-height:1.6;font-style:italic}
+
+.sp-btn{
+  font-family:'Cinzel',serif;
+  font-size:13px;font-weight:600;
+  letter-spacing:8px;
+  padding:20px 64px;
+  background:transparent;
+  border:1px solid var(--gold);
+  color:var(--gold2);
+  cursor:pointer;
+  transition:all .4s;
+  position:relative;overflow:hidden;
+  text-transform:uppercase;
+}
+.sp-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+}
+.sp-btn:hover::before{transform:scaleX(1)}
+.sp-btn:hover{color:#000;border-color:var(--gold2)}
+.sp-btn span{position:relative;z-index:1}
+
+.sp-warn{
+  font-size:10px;letter-spacing:2px;
+  color:rgba(255,255,255,.2);margin-top:20px;
+  font-family:'Cinzel',serif;
+}
+
+/* ═══════════════════════════════════════════
+   GAME LAYOUT
+═══════════════════════════════════════════ */
+#game{display:none;min-height:100vh;position:relative;z-index:1}
+
+/* TOP BAR */
+#topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(14,12,20,.96);
+  border-bottom:1px solid var(--border);
+  padding:0 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:60px;
+  backdrop-filter:blur(16px);
+}
+
+.tb-logo{
+  font-family:'Cinzel Decorative',serif;
+  font-size:16px;font-weight:700;
+  letter-spacing:4px;
+  background:linear-gradient(135deg,var(--gold3),var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+.tb-center{display:flex;gap:28px;align-items:center}
+
+.tb-stat{display:flex;flex-direction:column;align-items:center;gap:2px}
+.tb-stat-val{
+  font-family:'Cinzel',serif;
+  font-size:15px;font-weight:600;color:var(--gold2);
+}
+.tb-stat-lbl{font-size:7px;letter-spacing:4px;color:var(--ink3);font-weight:300;text-transform:uppercase}
+
+.tb-right{display:flex;gap:12px;align-items:center}
+
+.tb-phase{
+  font-family:'Cinzel',serif;
+  font-size:9px;letter-spacing:4px;
+  color:var(--ink3);
+  padding:6px 12px;
+  border:1px solid var(--border2);
+}
+
+.btn-accuse{
+  font-family:'Cinzel',serif;
+  font-size:10px;font-weight:600;
+  letter-spacing:4px;
+  padding:10px 22px;
+  background:var(--red);
+  border:1px solid var(--red2);
+  color:#f0c0c0;cursor:pointer;
+  transition:all .3s;
+  display:none;text-transform:uppercase;
+}
+.btn-accuse:hover{background:var(--red2)}
+.btn-accuse.visible{display:block;animation:pulseRed 2s ease-in-out infinite}
+@keyframes pulseRed{0%,100%{box-shadow:0 0 0 0 rgba(192,40,40,.3)}50%{box-shadow:0 0 0 6px rgba(192,40,40,0)}}
+
+/* MAIN GRID */
+#game-main{
+  display:grid;
+  grid-template-columns:300px 1fr 320px;
+  min-height:calc(100vh - 60px);
+}
+
+/* ── LEFT PANEL ── */
+#panel-left{
+  background:var(--paper);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+  max-height:calc(100vh - 60px);
+  position:sticky;top:60px;
+}
+
+.panel-section{
+  padding:18px 20px;
+  border-bottom:1px solid var(--border2);
+}
+
+.p-label{
+  font-family:'Cinzel',serif;
+  font-size:8px;font-weight:600;
+  letter-spacing:5px;color:var(--gold);
+  opacity:.65;margin-bottom:14px;
+  text-transform:uppercase;
+}
+
+/* Evidence */
+.evidence-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px;border:1px solid transparent;
+  margin-bottom:6px;cursor:pointer;transition:all .25s;
+}
+.evidence-item:hover{background:var(--paper2);border-color:var(--border2)}
+.evidence-item.new{border-color:var(--gold);background:rgba(196,144,48,.07);
+  animation:evFlash .6s ease}
+@keyframes evFlash{0%{background:rgba(196,144,48,.3)}100%{background:rgba(196,144,48,.07)}}
+
+.ev-icon{font-size:18px;flex-shrink:0;margin-top:2px;line-height:1}
+.ev-name{
+  font-family:'Cinzel',serif;
+  font-size:11px;letter-spacing:1px;color:var(--ink);margin-bottom:3px;
+}
+.ev-desc{font-size:12px;color:var(--ink3);line-height:1.5;font-style:italic}
+.ev-badge{
+  font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;
+  background:var(--gold);color:#000;padding:2px 6px;margin-left:6px;
+}
+
+/* Alibi tracker */
+.alibi-item{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 8px;
+  border:1px solid var(--border2);
+  margin-bottom:5px;
+  transition:border-color .3s;
+  cursor:pointer;
+}
+.alibi-item:hover{background:var(--paper2)}
+.alibi-item.suspect{border-color:rgba(192,40,40,.4)}
+.alibi-item.cleared{border-color:rgba(32,144,96,.4)}
+.alibi-item.partial{border-color:rgba(196,144,48,.4)}
+
+.alibi-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.alibi-name{
+  font-family:'Cinzel',serif;
+  font-size:11px;letter-spacing:1px;color:var(--ink);flex:1;
+}
+.alibi-tag{font-size:9px;letter-spacing:1px;color:var(--ink3)}
+.alibi-tag.lied{color:var(--red3)}
+.alibi-tag.ok{color:#40c080}
+.alibi-tag.partial{color:var(--gold2)}
+
+/* Notes */
+#notes-area{
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--ink2);
+  line-height:2;
+  min-height:140px;
+  padding:10px;
+  background:rgba(0,0,0,.25);
+  border:1px solid var(--border2);
+  width:100%;
+  resize:vertical;
+  outline:none;
+}
+#notes-area::placeholder{color:var(--ink4);font-style:italic}
+#notes-area:focus{border-color:rgba(196,144,48,.3)}
+
+/* Timeline */
+.timeline-entry{
+  display:flex;gap:10px;padding:8px 0;
+  border-bottom:1px solid var(--border2);
+  font-size:12px;
+}
+.tl-time{
+  font-family:'Cinzel',serif;
+  font-size:10px;color:var(--gold);
+  letter-spacing:1px;flex-shrink:0;
+  width:36px;text-align:right;
+}
+.tl-text{color:var(--ink3);line-height:1.5;font-style:italic}
+.tl-text strong{color:var(--ink2);font-style:normal}
+
+/* ── CENTER PANEL ── */
+#panel-center{
+  padding:36px 44px;
+  overflow-y:auto;
+  max-height:calc(100vh - 60px);
+}
+
+/* Header */
+.center-header{
+  text-align:center;
+  border-bottom:2px double rgba(196,144,48,.25);
+  padding-bottom:28px;
+  margin-bottom:36px;
+  position:relative;
+}
+.ch-kicker{
+  font-family:'Cinzel',serif;
+  font-size:9px;letter-spacing:10px;
+  color:var(--ink4);margin-bottom:16px;
+  text-transform:uppercase;
+}
+.ch-headline{
+  font-family:'Cinzel',serif;
+  font-size:clamp(26px,5vw,46px);
+  font-weight:700;
+  line-height:1.1;color:var(--ink);
+  margin-bottom:10px;
+  letter-spacing:2px;
+}
+.ch-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(15px,2.5vw,18px);
+  color:var(--ink2);
+  margin-bottom:14px;
+  line-height:1.6;
+}
+.ch-meta{
+  display:flex;gap:24px;justify-content:center;flex-wrap:wrap;
+  font-family:'Cinzel',serif;
+  font-size:9px;letter-spacing:3px;color:var(--ink4);
+}
+
+/* Report box */
+.report-box{
+  border:1px solid var(--border);
+  padding:28px 32px;
+  background:var(--paper2);
+  margin-bottom:36px;
+  position:relative;
+}
+.report-box::before{
+  content:'RELATÓRIO INICIAL — DOSSIÊ CONFIDENCIAL';
+  position:absolute;top:-10px;left:24px;
+  background:var(--paper2);padding:0 12px;
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:4px;color:var(--gold);
+}
+.report-text{
+  font-size:clamp(14px,2vw,16px);
+  line-height:2.1;color:var(--ink2);
+}
+.report-text strong{color:var(--ink);font-weight:600}
+
+/* Phase banner */
+.phase-banner{
+  display:flex;align-items:center;gap:16px;
+  padding:14px 20px;
+  border:1px solid var(--gold);
+  background:rgba(196,144,48,.07);
+  margin-bottom:28px;
+}
+.phase-banner-icon{font-size:22px}
+.phase-banner-body{}
+.phase-banner-title{
+  font-family:'Cinzel',serif;
+  font-size:11px;letter-spacing:4px;color:var(--gold2);
+  margin-bottom:3px;text-transform:uppercase;
+}
+.phase-banner-text{font-size:13px;color:var(--ink2);font-style:italic}
+
+/* Section title */
+.sec-title{
+  font-family:'Cinzel',serif;
+  font-size:10px;font-weight:600;
+  letter-spacing:7px;color:var(--gold);
+  margin-bottom:20px;
+  display:flex;align-items:center;gap:14px;
+  text-transform:uppercase;
+}
+.sec-title::before,.sec-title::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(to right,transparent,var(--border));
+}
+.sec-title::after{background:linear-gradient(to left,transparent,var(--border))}
+
+/* Room grid */
+.rooms-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:12px;margin-bottom:36px;
+}
+
+.room-card{
+  border:1px solid var(--border);
+  padding:22px 18px;
+  background:var(--paper);
+  cursor:pointer;
+  transition:all .35s;
+  position:relative;overflow:hidden;
+}
+.room-card::after{
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:2px;
+  background:var(--card-color,var(--gold));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.room-card:hover{
+  background:var(--paper2);
+  border-color:rgba(196,144,48,.4);
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+}
+.room-card:hover::after{transform:scaleX(1)}
+.room-card.visited{opacity:.55}
+.room-card.visited .room-check{display:block}
+.room-card.has-unread{border-color:rgba(196,144,48,.5)}
+.room-card.has-unread .room-icon{animation:glowPulse 2.5s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{filter:none}50%{filter:drop-shadow(0 0 10px var(--gold2))}}
+
+.room-icon{font-size:30px;margin-bottom:12px;display:block;line-height:1}
+.room-name{
+  font-family:'Cinzel',serif;
+  font-size:13px;letter-spacing:2px;color:var(--ink);margin-bottom:4px;
+}
+.room-hint{font-size:11px;font-style:italic;color:var(--ink3)}
+.room-check{
+  display:none;position:absolute;top:10px;right:12px;
+  font-family:'Cinzel',serif;font-size:11px;color:var(--gold);
+}
+.room-clue-count{
+  position:absolute;bottom:10px;right:12px;
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;
+  color:var(--ink3);
+}
+
+/* Character grid */
+.chars-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:12px;margin-bottom:36px;
+}
+
+.char-card{
+  border:1px solid var(--border);
+  background:var(--paper);
+  cursor:pointer;
+  transition:all .3s;
+  overflow:hidden;position:relative;
+}
+.char-card:hover{
+  border-color:rgba(196,144,48,.45);
+  transform:translateY(-3px);
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
+}
+
+.char-card-banner{
+  height:72px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:34px;
+  position:relative;overflow:hidden;
+}
+.char-card-banner::before{
+  content:'';position:absolute;inset:0;
+  background:inherit;opacity:.4;
+}
+
+.char-card-info{padding:14px 16px}
+.char-card-name{
+  font-family:'Cinzel',serif;
+  font-size:14px;letter-spacing:2px;color:var(--ink);margin-bottom:3px;
+}
+.char-card-role{font-size:11px;font-style:italic;color:var(--ink3)}
+.char-card-alibi{font-size:10px;color:var(--ink4);margin-top:4px;letter-spacing:.5px}
+
+.char-badge{
+  position:absolute;top:8px;right:8px;
+  font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;
+  padding:3px 8px;text-transform:uppercase;
+}
+.char-badge.suspect{background:rgba(138,24,24,.6);color:#f0c0c0;border:1px solid rgba(192,40,40,.4)}
+.char-badge.cleared{background:rgba(20,120,70,.5);color:#a0f0c0;border:1px solid rgba(40,192,120,.3)}
+.char-badge.key{background:rgba(128,30,200,.5);color:#e0c0ff;border:1px solid rgba(160,60,220,.4)}
+
+.char-interro-count{
+  position:absolute;bottom:8px;right:10px;
+  font-size:10px;color:var(--ink4);font-style:italic;
+}
+
+/* ── RIGHT PANEL ── */
+#panel-right{
+  background:var(--paper);
+  border-left:1px solid var(--border);
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+  max-height:calc(100vh - 60px);
+  position:sticky;top:60px;
+}
+
+.ded-header{
+  padding:18px 20px;
+  border-bottom:1px solid var(--border2);
+  font-family:'Cinzel',serif;
+  font-size:9px;letter-spacing:6px;color:var(--gold);opacity:.65;
+  text-transform:uppercase;
+}
+
+/* Suspect meters */
+.suspect-row{
+  padding:10px 16px 12px;
+  border-bottom:1px solid var(--border2);
+  cursor:pointer;
+  transition:background .2s;
+}
+.suspect-row:hover{background:var(--paper2)}
+
+.sr-top{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.sr-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.sr-name{
+  font-family:'Cinzel',serif;
+  font-size:12px;letter-spacing:1px;color:var(--ink);flex:1;
+}
+.sr-pts{
+  font-family:'Cinzel',serif;
+  font-size:12px;font-weight:600;color:var(--gold2);
+}
+
+.sr-bar{height:2px;background:rgba(255,255,255,.05);border-radius:1px;overflow:hidden;margin-bottom:4px}
+.sr-fill{height:100%;border-radius:1px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.sr-verdict{font-size:9px;letter-spacing:1.5px;color:var(--ink3);font-style:italic}
+
+/* Connections web */
+.connection-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 0;border-bottom:1px solid var(--border2);
+  font-size:12px;
+}
+.conn-names{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;
+  color:var(--gold2);min-width:110px;flex-shrink:0;
+}
+.conn-desc{color:var(--ink3);font-style:italic;line-height:1.5}
+
+/* Theory */
+.theory-box{padding:18px 20px;border-bottom:1px solid var(--border2)}
+.theory-section{margin-bottom:16px}
+.theory-label{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;
+  color:var(--gold);margin-bottom:8px;text-transform:uppercase;
+}
+.theory-select{
+  width:100%;
+  background:var(--paper2);
+  border:1px solid var(--border);
+  color:var(--ink2);
+  font-family:'Cormorant Garamond',serif;
+  font-size:14px;font-style:italic;
+  padding:10px 12px;outline:none;cursor:pointer;
+}
+.theory-select:focus{border-color:var(--gold)}
+.theory-select option{background:var(--paper2);color:var(--ink2)}
+
+/* Progress */
+.progress-item{
+  display:flex;align-items:center;gap:10px;margin-bottom:10px;
+}
+.prog-icon{font-size:14px}
+.prog-text{font-size:12px;color:var(--ink3);flex:1;font-style:italic}
+.prog-check{font-size:13px;color:var(--gold)}
+
+/* ═══════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════ */
+#modal-overlay{
+  display:none;position:fixed;inset:0;z-index:150;
+  background:rgba(0,0,0,.88);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:20px;
+}
+#modal-overlay.open{display:flex;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+
+#modal-box{
+  background:var(--paper);
+  border:1px solid var(--border);
+  max-width:720px;width:100%;
+  max-height:90vh;
+  overflow-y:auto;
+  position:relative;
+  box-shadow:0 24px 100px rgba(0,0,0,.9);
+}
+
+.modal-header{
+  padding:24px 28px 20px;
+  border-bottom:1px solid var(--border2);
+  display:flex;align-items:flex-start;
+  justify-content:space-between;gap:16px;
+  position:sticky;top:0;background:var(--paper);z-index:1;
+}
+.modal-title-text{
+  font-family:'Cinzel',serif;
+  font-size:22px;letter-spacing:3px;color:var(--ink);
+}
+.modal-subtitle-text{font-size:13px;font-style:italic;color:var(--ink3);margin-top:4px}
+.modal-close{
+  font-family:'Cinzel',serif;font-size:16px;
+  color:var(--ink3);background:none;border:none;cursor:pointer;
+  padding:4px 8px;transition:color .2s;flex-shrink:0;
+}
+.modal-close:hover{color:var(--red3)}
+
+.modal-body{padding:28px}
+
+/* Room scene */
+.room-scene-text{
+  font-size:15px;line-height:2.1;color:var(--ink2);
+  font-style:italic;margin-bottom:24px;
+  padding-left:16px;border-left:2px solid var(--gold);
+}
+.room-atmosphere{
+  font-size:13px;color:var(--ink3);font-style:italic;
+  margin-bottom:20px;line-height:1.8;
+}
+
+.clue-card{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:18px;
+  border:1px solid rgba(196,144,48,.3);
+  background:rgba(196,144,48,.05);
+  margin-bottom:12px;
+  animation:clueReveal .5s ease;
+}
+.clue-card.already-found{
+  border-color:var(--border2);background:transparent;opacity:.6;
+}
+@keyframes clueReveal{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+.clue-card-icon{font-size:26px;flex-shrink:0;line-height:1}
+.clue-card-name{
+  font-family:'Cinzel',serif;font-size:12px;letter-spacing:1px;
+  color:var(--gold2);margin-bottom:5px;
+}
+.clue-card-text{font-size:13px;font-style:italic;color:var(--ink2);line-height:1.8}
+.clue-card-suspects{
+  margin-top:8px;font-size:10px;letter-spacing:2px;
+  color:var(--ink4);font-family:'Cinzel',serif;
+  text-transform:uppercase;
+}
+
+/* Interrogation */
+.interro-portrait{
+  display:flex;align-items:center;gap:16px;
+  padding:16px 20px;
+  border:1px solid var(--border2);
+  background:var(--paper2);
+  margin-bottom:20px;
+}
+.interro-emoji{font-size:40px;line-height:1}
+.interro-name{
+  font-family:'Cinzel',serif;font-size:18px;letter-spacing:3px;
+  color:var(--ink);margin-bottom:4px;
+}
+.interro-role{font-size:13px;font-style:italic;color:var(--ink3);margin-bottom:4px}
+.interro-alibi{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;
+  color:var(--ink4);text-transform:uppercase;
+}
+
+.interro-intro{
+  font-size:14px;font-style:italic;color:var(--ink2);
+  line-height:2;margin-bottom:24px;
+  padding:18px;border-left:3px solid var(--gold);
+  background:rgba(196,144,48,.04);
+}
+
+.question-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+
+.q-btn{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px 18px;
+  background:var(--paper2);
+  border:1px solid var(--border2);
+  color:var(--ink2);
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:14px;
+  cursor:pointer;transition:all .25s;
+  text-align:left;width:100%;
+}
+.q-btn:hover:not(.asked){
+  background:var(--paper3);
+  border-color:rgba(196,144,48,.4);
+  color:var(--ink);
+}
+.q-btn.asked{
+  opacity:.5;cursor:default;
+  border-color:var(--border2);
+  background:transparent;
+}
+.q-btn.key-question{border-color:rgba(196,144,48,.35);color:var(--ink)}
+.q-btn.key-question:not(.asked)::before{
+  content:'★';
+  color:var(--gold);flex-shrink:0;font-style:normal;
+}
+.q-num{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;
+  color:var(--ink3);flex-shrink:0;margin-top:2px;
+}
+
+.answer-card{
+  border-left:3px solid var(--char-color,var(--gold));
+  padding:16px 20px;
+  background:rgba(255,255,255,.02);
+  margin-bottom:12px;
+  animation:answerIn .4s ease;
+}
+@keyframes answerIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.answer-speaker{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;
+  margin-bottom:8px;text-transform:uppercase;
+}
+.answer-text{font-size:14px;color:var(--ink2);line-height:2;font-style:italic}
+.answer-text em{color:var(--ink3)}
+
+.answer-clue{
+  margin-top:12px;padding:10px 14px;
+  background:rgba(196,144,48,.08);border:1px solid rgba(196,144,48,.25);
+  font-size:12px;color:var(--gold2);display:flex;align-items:flex-start;gap:8px;
+  line-height:1.6;
+}
+.answer-lie{
+  margin-top:12px;padding:10px 14px;
+  background:rgba(192,40,40,.08);border:1px solid rgba(192,40,40,.3);
+  font-size:12px;color:#f09090;display:flex;align-items:flex-start;gap:8px;
+  line-height:1.6;
+}
+.answer-newinfo{
+  margin-top:12px;padding:10px 14px;
+  background:rgba(128,30,200,.08);border:1px solid rgba(128,30,200,.3);
+  font-size:12px;color:#d0a0ff;display:flex;align-items:flex-start;gap:8px;
+  line-height:1.6;
+}
+
+/* Re-interrogation indicator */
+.reinquiry-note{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;
+  color:var(--ink4);text-align:center;padding:12px;
+  border:1px dashed var(--border2);margin-bottom:16px;
+}
+
+/* ═══════════════════════════════════════════
+   ACCUSATION SCREEN
+═══════════════════════════════════════════ */
+#accusation-screen{
+  display:none;
+  position:fixed;inset:0;z-index:200;
+  background:var(--bg);
+  overflow-y:auto;padding:40px 20px;
+}
+
+.acc-wrap{max-width:700px;margin:0 auto}
+
+.acc-header{text-align:center;margin-bottom:48px}
+.acc-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(28px,7vw,54px);font-weight:700;
+  letter-spacing:6px;color:var(--red3);
+  margin-bottom:10px;
+}
+.acc-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-style:italic;color:var(--ink3);
+}
+
+.acc-divider{
+  width:100%;height:1px;
+  background:linear-gradient(to right,transparent,rgba(192,40,40,.5),transparent);
+  margin:28px 0;
+}
+
+.acc-field{border:1px solid var(--border);background:var(--paper);margin-bottom:16px}
+.acc-field-label{
+  padding:12px 20px;
+  background:var(--paper2);
+  border-bottom:1px solid var(--border2);
+  font-family:'Cinzel',serif;
+  font-size:9px;letter-spacing:5px;color:var(--gold);
+  text-transform:uppercase;
+}
+.acc-options{display:flex;flex-wrap:wrap;gap:0}
+.acc-option{
+  flex:1;min-width:120px;
+  padding:14px 18px;
+  background:transparent;
+  border:none;
+  border-right:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+  color:var(--ink2);
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:14px;
+  cursor:pointer;transition:all .2s;text-align:left;
+}
+.acc-option:hover{background:var(--paper2);color:var(--ink)}
+.acc-option.selected{
+  background:rgba(196,144,48,.1);
+  color:var(--gold2);
+  border-color:rgba(196,144,48,.35);
+}
+
+.acc-summary{
+  border:1px solid var(--border2);
+  padding:20px 24px;
+  margin:24px 0;
+  background:var(--paper2);
+  font-size:14px;color:var(--ink3);
+  line-height:2;font-style:italic;
+}
+.acc-summary strong{color:var(--ink);font-style:normal}
+
+.acc-note{
+  font-size:13px;font-style:italic;color:var(--ink3);
+  line-height:1.8;padding:16px 20px;
+  background:rgba(0,0,0,.2);border:1px solid var(--border2);
+  margin-bottom:24px;
+}
+
+.btn-confirm{
+  font-family:'Cinzel',serif;
+  font-size:13px;font-weight:700;
+  letter-spacing:6px;
+  padding:22px;width:100%;
+  background:var(--red);border:1px solid var(--red2);
+  color:#f0c0c0;cursor:pointer;transition:all .3s;
+  text-transform:uppercase;
+}
+.btn-confirm:hover{background:var(--red2)}
+.btn-confirm:disabled{opacity:.35;pointer-events:none}
+
+/* ═══════════════════════════════════════════
+   ENDING SCREEN
+═══════════════════════════════════════════ */
+#ending-screen{
+  display:none;position:fixed;inset:0;z-index:210;
+  background:var(--bg);overflow-y:auto;
+  padding:60px 20px;
+}
+
+.ending-wrap{max-width:760px;margin:0 auto}
+
+.ending-stamp{
+  text-align:center;
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(30px,7vw,60px);
+  font-weight:700;line-height:1;
+  margin-bottom:40px;
+}
+.ending-stamp.correct{color:#50d890;text-shadow:0 0 50px rgba(80,216,144,.35)}
+.ending-stamp.partial{color:var(--gold2);text-shadow:0 0 50px rgba(224,176,80,.3)}
+.ending-stamp.wrong{color:var(--red3);text-shadow:0 0 50px rgba(220,64,64,.35)}
+
+.ending-paper{
+  border:2px solid var(--border);
+  background:var(--paper);
+  padding:44px;
+  position:relative;
+  margin-bottom:32px;
+}
+.ending-paper::before{
+  content:'— EDIÇÃO ESPECIAL — CASO ENCERRADO —';
+  position:absolute;top:-11px;left:50%;
+  transform:translateX(-50%);
+  background:var(--paper);padding:0 18px;
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:5px;color:var(--gold);
+  white-space:nowrap;
+}
+
+.ending-headline{
+  font-family:'Cinzel',serif;
+  font-size:clamp(20px,4vw,36px);
+  font-weight:700;letter-spacing:2px;
+  color:var(--ink);line-height:1.2;
+  margin-bottom:16px;text-align:center;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--border2);
+}
+
+.ending-story{
+  font-size:clamp(14px,2vw,16px);
+  line-height:2.2;color:var(--ink2);
+  margin-bottom:20px;
+}
+.ending-story p{margin-bottom:16px}
+.ending-story strong{color:var(--ink)}
+.ending-story em{color:var(--gold2);font-style:normal}
+
+.ending-reveal{
+  border-top:1px solid var(--border2);
+  padding-top:24px;margin-top:8px;
+}
+.ending-reveal-title{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;
+  color:var(--gold);margin-bottom:14px;text-transform:uppercase;
+}
+
+.truth-grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;
+  margin-bottom:24px;
+}
+.truth-item{
+  border:1px solid var(--border2);padding:14px;
+  background:var(--paper2);text-align:center;
+}
+.truth-label{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;
+  color:var(--ink3);margin-bottom:8px;text-transform:uppercase;
+}
+.truth-val{
+  font-family:'Cinzel',serif;font-size:13px;
+  color:var(--ink);letter-spacing:1px;
+}
+
+.score-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  margin:28px 0;
+}
+.score-item{
+  border:1px solid var(--border);padding:16px;text-align:center;
+  background:var(--paper2);
+}
+.score-val{
+  font-family:'Cinzel Decorative',serif;
+  font-size:26px;color:var(--gold2);
+}
+.score-lbl{font-size:8px;letter-spacing:3px;color:var(--ink3);margin-top:4px;text-transform:uppercase}
+
+.rank-display{
+  text-align:center;margin:20px 0;
+  padding:16px;border:1px solid rgba(196,144,48,.3);
+  background:rgba(196,144,48,.05);
+}
+.rank-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(18px,4vw,28px);color:var(--gold3);
+}
+.rank-label{font-size:11px;letter-spacing:4px;color:var(--ink3);margin-top:6px;font-family:'Cinzel',serif}
+
+.btn-restart{
+  font-family:'Cinzel',serif;
+  font-size:11px;letter-spacing:5px;
+  padding:18px 48px;
+  background:transparent;border:1px solid var(--border);
+  color:var(--ink2);cursor:pointer;transition:all .3s;
+  display:block;margin:0 auto;text-transform:uppercase;
+}
+.btn-restart:hover{border-color:var(--gold);color:var(--gold2)}
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
+#toast{
+  position:fixed;bottom:28px;right:28px;z-index:500;
+  background:var(--paper);border:1px solid var(--gold);
+  padding:14px 20px;max-width:320px;
+  display:none;font-size:13px;font-style:italic;color:var(--ink2);
+  box-shadow:0 8px 40px rgba(0,0,0,.7);
+  animation:toastIn .3s ease;
+}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.toast-icon{margin-right:8px}
+
+/* ═══════════════════════════════════════════
+   SPECIAL: REVELATION UNLOCK
+═══════════════════════════════════════════ */
+.revelation-box{
+  border:1px solid var(--purple2);
+  background:rgba(128,30,200,.08);
+  padding:18px 20px;
+  margin-bottom:20px;
+  animation:revelationPulse 3s ease-in-out infinite;
+}
+@keyframes revelationPulse{0%,100%{border-color:rgba(128,30,200,.4)}50%{border-color:rgba(128,30,200,.8)}}
+.revelation-title{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;
+  color:var(--purple2);margin-bottom:8px;text-transform:uppercase;
+}
+.revelation-text{font-size:13px;color:#d0b0f0;font-style:italic;line-height:1.8}
+
+/* ═══════════════════════════════════════════
+   CONFRONTATION modal
+═══════════════════════════════════════════ */
+.confrontation-box{
+  border:1px solid var(--red2);
+  background:rgba(192,40,40,.07);
+  padding:18px;margin-bottom:16px;
+}
+.conf-title{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;
+  color:var(--red3);margin-bottom:8px;text-transform:uppercase;
+}
+.conf-text{font-size:13px;color:#f0b0b0;font-style:italic;line-height:1.8}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--paper)}
+::-webkit-scrollbar-thumb{background:rgba(196,144,48,.2);border-radius:2px}
+
+/* Responsive */
+@media(max-width:960px){
+  #game-main{grid-template-columns:260px 1fr}
+  #panel-right{display:none}
+}
+@media(max-width:680px){
+  #game-main{grid-template-columns:1fr}
+  #panel-left{position:static;max-height:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ SPLASH ════════════ -->
+<div id="splash">
+  <div class="splash-wrap">
+    <div class="splash-frame-outer">
+      <div class="splash-frame-inner">
+        <div class="sp-corner tl"></div>
+        <div class="sp-corner tr"></div>
+        <div class="sp-corner bl"></div>
+        <div class="sp-corner br"></div>
+
+        <div class="sp-eyebrow">Investigação · Dedução · Revelação</div>
+        <div class="sp-title-top">VILLA</div>
+        <div class="sp-title-bottom">OBSCURA</div>
+        <div class="sp-subtitle">— A Herança Maldita —</div>
+
+        <div class="sp-divider">
+          <div class="sp-divider-icon">✦ MCMXCV ✦</div>
+        </div>
+
+        <div class="sp-premise">
+          O excêntrico <strong>Duarte Vasconcelos</strong> foi encontrado morto em sua villa no interior.<br>
+          O testamento — que deveria ser lido naquela noite — <strong>desapareceu</strong>.<br>
+          Sete herdeiros sob o mesmo teto. Um segredo de décadas.<br>
+          Alguém tem muito a perder. <strong>Descubra quem roubou o documento antes que a verdade seja enterrada com ele.</strong>
+        </div>
+
+        <div class="sp-cast">
+          <span class="sp-cast-tag">POLLYANA</span>
+          <span class="sp-cast-tag">CARLUZ</span>
+          <span class="sp-cast-tag">EROS</span>
+          <span class="sp-cast-tag">STEPHANY</span>
+          <span class="sp-cast-tag">MARY</span>
+          <span class="sp-cast-tag">MEL</span>
+          <span class="sp-cast-tag">JOY</span>
+          <span class="sp-cast-tag">ELLIE</span>
+        </div>
+
+        <div class="sp-mechanics">
+          <div class="sp-mech">
+            <div class="sp-mech-icon">🔍</div>
+            <div class="sp-mech-title">Pistas em Camadas</div>
+            <div class="sp-mech-text">Cada cômodo revela pistas que se conectam — algumas só fazem sentido depois de ouvir testemunhos</div>
+          </div>
+          <div class="sp-mech">
+            <div class="sp-mech-icon">💬</div>
+            <div class="sp-mech-title">Interrogatórios Vivos</div>
+            <div class="sp-mech-text">Pressione com evidências, detecte mentiras e desbloqueie revelações ao confrontar suspeitos</div>
+          </div>
+          <div class="sp-mech">
+            <div class="sp-mech-icon">🕸️</div>
+            <div class="sp-mech-title">Teia de Conexões</div>
+            <div class="sp-mech-text">Relacionamentos e segredos cruzados. Quem tem alibi real? Quem cobre pra quem?</div>
+          </div>
+          <div class="sp-mech">
+            <div class="sp-mech-icon">⏳</div>
+            <div class="sp-mech-title">Sem Pressão de Tempo</div>
+            <div class="sp-mech-text">Tome o tempo que precisar. A investigação perfeita exige paciência</div>
+          </div>
+        </div>
+
+        <button class="sp-btn" onclick="startGame()"><span>▶ INICIAR INVESTIGAÇÃO</span></button>
+        <div class="sp-warn">FICÇÃO INTERATIVA · PERSONAGENS FICTÍCIOS · +16</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ GAME ════════════ -->
+<div id="game">
+
+  <div id="topbar">
+    <div class="tb-logo">VILLA OBSCURA</div>
+    <div class="tb-center">
+      <div class="tb-stat">
+        <div class="tb-stat-val" id="stat-pistas">0</div>
+        <div class="tb-stat-lbl">Pistas</div>
+      </div>
+      <div class="tb-stat">
+        <div class="tb-stat-val" id="stat-interr">0/8</div>
+        <div class="tb-stat-lbl">Interrogações</div>
+      </div>
+      <div class="tb-stat">
+        <div class="tb-stat-val" id="stat-mentiras">0</div>
+        <div class="tb-stat-lbl">Mentiras</div>
+      </div>
+      <div class="tb-stat">
+        <div class="tb-stat-val" id="stat-certeza">–</div>
+        <div class="tb-stat-lbl">+ Suspeito</div>
+      </div>
+    </div>
+    <div class="tb-right">
+      <div class="tb-phase" id="tb-phase">FASE I — CHEGADA</div>
+      <button class="btn-accuse" id="btn-accuse" onclick="openAccusation()">⚖ ACUSAR</button>
+    </div>
+  </div>
+
+  <div id="game-main">
+
+    <!-- LEFT -->
+    <div id="panel-left">
+      <div class="panel-section">
+        <div class="p-label">Evidências Coletadas</div>
+        <div id="evidence-list">
+          <div style="font-size:12px;font-style:italic;color:var(--ink4)">Nenhuma evidência ainda.<br>Investigue os cômodos.</div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="p-label">Status dos Suspeitos</div>
+        <div id="alibi-list"></div>
+      </div>
+
+      <div class="panel-section">
+        <div class="p-label">Linha do Tempo</div>
+        <div id="timeline-list">
+          <div style="font-size:11px;font-style:italic;color:var(--ink4)">Construída à medida que você investiga...</div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="p-label">Suas Anotações</div>
+        <textarea id="notes-area" placeholder="Anote suas teorias...&#10;&#10;Quem tinha motivo? Quem mentiu?&#10;Quais pistas se conectam?"></textarea>
+      </div>
+    </div>
+
+    <!-- CENTER -->
+    <div id="panel-center">
+      <div class="center-header">
+        <div class="ch-kicker">Villa Obscura · Caso Nº 001 · Dossiê Restrito</div>
+        <div class="ch-headline">O TESTAMENTO<br>DESAPARECEU</div>
+        <div class="ch-sub">Sete herdeiros, uma noite, um documento que vale uma fortuna —<br>e alguém entre eles não quer que a verdade venha à tona</div>
+        <div class="ch-meta">
+          <span>Investigador: Você</span>
+          <span>Local: Villa Vasconcelos</span>
+          <span>Situação: Ativa</span>
+        </div>
+      </div>
+
+      <div class="report-box">
+        <div class="report-text">
+          O patriarca <strong>Duarte Vasconcelos</strong>, 74 anos, foi encontrado morto em seu escritório às 7h da manhã. Causa mortis: parada cardíaca — aparentemente natural. Mas o testamento, que ele havia anunciado que leria àquelas oito pessoas naquela mesma noite, <strong>não estava em lugar algum</strong>.<br><br>
+          O cofre estava vazio. A janela, fechada por dentro. Os herdeiros estavam na villa — e um deles, ao que tudo indica, sabia o que estava escrito no documento. Sabia, e não queria que os outros soubessem. <strong>Encontre o testamento. Descubra quem o roubou — e por quê.</strong>
+        </div>
+      </div>
+
+      <div class="phase-banner" id="phase-banner">
+        <div class="phase-banner-icon">🏛️</div>
+        <div class="phase-banner-body">
+          <div class="phase-banner-title">Fase I — A Chegada</div>
+          <div class="phase-banner-text">Comece investigando os cômodos da villa e interrogando os herdeiros. As primeiras pistas revelarão quem tinha acesso ao cofre.</div>
+        </div>
+      </div>
+
+      <div class="sec-title">Investigar Cômodos</div>
+      <div class="rooms-grid" id="rooms-grid"></div>
+
+      <div class="sec-title">Interrogar Suspeitos</div>
+      <div class="chars-grid" id="chars-grid"></div>
+    </div>
+
+    <!-- RIGHT -->
+    <div id="panel-right">
+      <div class="ded-header">Quadro de Dedução</div>
+
+      <div id="suspect-meters"></div>
+
+      <div class="theory-box">
+        <div class="theory-section">
+          <div class="theory-label">Culpado — Sua Teoria</div>
+          <select class="theory-select" id="theory-culpado" onchange="updateProgress()">
+            <option value="">— selecione —</option>
+            <option>Pollyana</option><option>Carluz</option>
+            <option>Eros</option><option>Stephany</option>
+            <option>Mary</option><option>Mel</option>
+            <option>Joy</option><option>Ellie</option>
+          </select>
+        </div>
+        <div class="theory-section">
+          <div class="theory-label">Motivo — Sua Teoria</div>
+          <select class="theory-select" id="theory-motivo" onchange="updateProgress()">
+            <option value="">— selecione —</option>
+            <option value="heranca">Herança em risco</option>
+            <option value="segredo">Segredo comprometedor</option>
+            <option value="vinganca">Vingança familiar</option>
+            <option value="protecao">Proteger outro herdeiro</option>
+            <option value="divida">Dívida desesperada</option>
+          </select>
+        </div>
+        <div class="theory-section">
+          <div class="theory-label">Método — Sua Teoria</div>
+          <select class="theory-select" id="theory-metodo" onchange="updateProgress()">
+            <option value="">— selecione —</option>
+            <option value="combinacao">Código do cofre obtido antes</option>
+            <option value="chave">Chave-mestra duplicada</option>
+            <option value="cumplicidade">Cumplicidade — dois envolvidos</option>
+            <option value="acidente">Encontrou acidentalmente</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="p-label">Conexões Entre Personagens</div>
+        <div id="connections-list">
+          <div style="font-size:11px;font-style:italic;color:var(--ink4)">Descobertas ao interrogar...</div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="p-label">Progresso da Investigação</div>
+        <div id="progress-list"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════ MODAL ════════════ -->
+<div id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div id="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title-text" id="modal-title"></div>
+        <div class="modal-subtitle-text" id="modal-subtitle"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- ════════════ ACCUSATION ════════════ -->
+<div id="accusation-screen">
+  <div class="acc-wrap">
+    <div class="acc-header">
+      <div class="acc-title">Acusação Formal</div>
+      <div class="acc-subtitle">Você reuniu as evidências. Chegou a hora da verdade.<br>Escolha com sabedoria — não há como voltar.</div>
+    </div>
+    <div id="accusation-form"></div>
+  </div>
+</div>
+
+<!-- ════════════ ENDING ════════════ -->
+<div id="ending-screen">
+  <div class="ending-wrap" id="ending-wrap"></div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"><span class="toast-icon">🔍</span><span id="toast-text"></span></div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+//  GAME DATA
+// ════════════════════════════════════════════════════════════
+
+const CHARACTERS = {
+  Pollyana: {
+    color:'#c84820',
+    emoji:'🌻',
+    role:'Sobrinha favorita — herdeira principal no testamento anterior',
+    alibi:'Afirma ter ficado no quarto lendo',
+    desc:'Calmíssima para a situação. Conhecia o velho melhor que todos.',
+  },
+  Carluz: {
+    color:'#d49010',
+    emoji:'⚡',
+    role:'Sobrinho — excluído do testamento após briga com Duarte',
+    alibi:'Diz ter ficado na sala com Eros',
+    desc:'Nervoso. Tem muito a perder — ou já perdeu tudo.',
+  },
+  Eros: {
+    color:'#9030c0',
+    emoji:'🔮',
+    role:'Primo distante — recém-incluído no testamento por surpresa',
+    alibi:'Diz ter ficado com Carluz até tarde',
+    desc:'Elegante demais para a situação. Parece saber mais do que fala.',
+  },
+  Stephany: {
+    color:'#2070c0',
+    emoji:'📐',
+    role:'Advogada — redatora do próprio testamento desaparecido',
+    alibi:'Afirma ter dormido cedo após a janta',
+    desc:'Profissional. Mede cada palavra. Só ela conhecia o conteúdo completo.',
+  },
+  Mary: {
+    color:'#209060',
+    emoji:'🌿',
+    role:'Assistente pessoal de Duarte há 11 anos',
+    alibi:'Diz ter ficado na cozinha até tarde',
+    desc:'A mais abalada pela morte. Ou representa isso muito bem.',
+  },
+  Mel: {
+    color:'#c02858',
+    emoji:'🌸',
+    role:'Neta ilegítima — reconhecida formalmente só nesse testamento',
+    alibi:'Diz ter saído para o jardim à meia-noite',
+    desc:'A revelação da noite. Sua existência muda tudo para os outros.',
+  },
+  Joy: {
+    color:'#e05010',
+    emoji:'🍷',
+    role:'Filha mais velha — esperava herdar tudo',
+    alibi:'Diz ter ficado no terraço bebendo',
+    desc:'Furiosa. Não esconde que considera o testamento uma injustiça.',
+  },
+  Ellie: {
+    color:'#308090',
+    emoji:'🌊',
+    role:'Filha mais nova — sempre em segundo plano',
+    alibi:'Afirma ter dormido logo após o jantar',
+    desc:'Quieta. Observa tudo. Difícil ler o que pensa.',
+  },
+};
+
+const ROOMS = [
+  {
+    id:'escritorio',
+    name:'Escritório de Duarte',
+    icon:'📜',
+    hint:'Onde o corpo foi encontrado',
+    color:'#c49030',
+    desc:'O escritório cheira a tabaco e papel antigo. O cofre embutido na parede está aberto — vazio. A escrivaninha tem gavetas levemente fora do lugar. Uma luz estava acesa quando descobriram o corpo.',
+    atmosphere:'O centro de tudo. Cada objeto aqui pode ser a chave.',
+    clues:[
+      {
+        id:'c_cofre',
+        icon:'🔒',
+        name:'Cofre Vazio — Arranhões Frescos',
+        text:'O cofre não foi forçado — foi aberto com a combinação. Mas há arranhões novos ao redor do disco: alguém girou nervosamente, talvez às cegas. Quem sabia a combinação?',
+        suspects:['Stephany','Joy','Pollyana'],
+        timelineEntry:{time:'23h?',text:'<strong>Alguém</strong> abriu o cofre com a combinação correta — mas de forma agitada.'},
+      },
+      {
+        id:'c_copo',
+        icon:'🥃',
+        name:'Copo de Bourbon com Batom',
+        text:'Sobre a mesa: um copo com restos de bourbon e uma marca de batom cor de rosa-velho. Duarte não usava batom. Alguém esteve aqui com ele antes de morrer.',
+        suspects:['Joy','Pollyana','Mel'],
+        timelineEntry:{time:'21h',text:'Uma mulher tomou bourbon com <strong>Duarte</strong> no escritório antes da morte.'},
+      },
+      {
+        id:'c_carta',
+        icon:'📄',
+        name:'Rascunho de Carta Rasgado',
+        text:'Na lixeira: um rascunho rasgado em pedaços. Após montagem, lê-se: "...se a herança for dividida como planejo, certifique-se de que [rasgado] não descubra antes que eu possa explicar pessoalmente. A reação pode ser [rasgado]..."',
+        suspects:['Stephany','Pollyana','Joy'],
+        timelineEntry:{time:'Dias antes',text:'<strong>Duarte</strong> estava preocupado com a reação de alguém ao testamento.'},
+      },
+    ]
+  },
+  {
+    id:'sala_jantar',
+    name:'Sala de Jantar',
+    icon:'🕯️',
+    hint:'Última refeição juntos',
+    color:'#8a3010',
+    desc:'A mesa ainda tem as louças do jantar de ontem. Seis taças de vinho — mas eram oito à mesa. Duas pessoas não beberam. As cadeiras estão levemente deslocadas, como de uma conversa acalorada que terminou mal.',
+    atmosphere:'O palco do último encontro. Tensões antigas vieram à tona aqui.',
+    clues:[
+      {
+        id:'c_tacas',
+        icon:'🍷',
+        name:'Seis Taças — Duas Ausências',
+        text:'Oito pessoas no jantar, apenas seis taças com vinho. Alguém sóbrio — ou dois. Quem evitou o álcool naquela noite? E por quê?',
+        suspects:['Ellie','Stephany'],
+        timelineEntry:{time:'20h',text:'Duas pessoas ficaram sóbrias durante o jantar — possivelmente planejando algo.'},
+      },
+      {
+        id:'c_bilhete',
+        icon:'📝',
+        name:'Bilhete Dobrado Sob Prato',
+        text:'Escondido sob um dos pratos: um bilhete escrito à mão. "Esta noite. Espera que eu saia. Depois vai sozinha." — A letra é pequena, precipitada. Nenhuma assinatura. Para quem?',
+        suspects:['Eros','Carluz','Mel'],
+        timelineEntry:{time:'20h',text:'Um bilhete secreto foi passado durante o jantar — uma instrução para alguém agir sozinho.'},
+      },
+    ]
+  },
+  {
+    id:'biblioteca',
+    name:'Biblioteca',
+    icon:'📚',
+    hint:'Arquivo e memória',
+    color:'#503080',
+    desc:'Estantes do chão ao teto. Cheira a livros velhos e segredos guardados. Um livro em especial — "Direito Sucessório Brasileiro" — está com marcadores em cinco páginas diferentes. Alguém pesquisou a fundo.',
+    atmosphere:'O conhecimento é poder. Alguém usou este lugar para se preparar.',
+    clues:[
+      {
+        id:'c_livro',
+        icon:'⚖️',
+        name:'Livro de Direito Marcado',
+        text:'"Direito Sucessório Brasileiro" com marcações a lápis em seções sobre herança contestada, herdeiros ilegítimos e prazo de impugnação de testamento. Alguém estudou as formas de contestar o documento.',
+        suspects:['Joy','Carluz','Stephany'],
+        timelineEntry:{time:'Dias antes',text:'Alguém pesquisou formas de <strong>contestar um testamento</strong> na biblioteca.'},
+      },
+      {
+        id:'c_diario',
+        icon:'📓',
+        name:'Diário de Duarte — Última Entrada',
+        text:'Um diário escondido atrás dos volumes de enciclopédia. Última entrada, dois dias atrás: "Ela finalmente sabe. Reação melhor do que esperava. Mas os outros... preciso estar presente quando descobrirem. Sem Stephany para conter, pode ser catastrófico."',
+        suspects:['Mel','Stephany','Joy'],
+        timelineEntry:{time:'2 dias antes',text:'<strong>Duarte</strong> revelou um segredo para alguém — e temia a reação dos outros herdeiros.'},
+      },
+      {
+        id:'c_chave',
+        icon:'🗝️',
+        name:'Impressão da Chave do Cofre',
+        text:'Em uma caixa de pó de impressão na gaveta da escrivaninha de estudo: uma impressão parcial de chave. A chave do cofre foi copiada. Não há como saber quando — mas a impressão ainda está fresca.',
+        suspects:['Eros','Pollyana','Mary'],
+        timelineEntry:{time:'Recente',text:'A chave do cofre foi copiada ou pelo menos <strong>tentada reproduzir</strong> na biblioteca.'},
+      },
+    ]
+  },
+  {
+    id:'terraço',
+    name:'Terraço',
+    icon:'🌙',
+    hint:'Vista para o jardim — e para o escritório',
+    color:'#103060',
+    desc:'Do terraço se vê a janela iluminada do escritório de Duarte. Alguém aqui poderia observar quem entrava e saía. Uma cadeira de vime está virada. Uma garrafa de vinho — aberta, pela metade — com um único copo.',
+    atmosphere:'O observatório involuntário. Quem estava aqui viu mais do que imagina.',
+    clues:[
+      {
+        id:'c_cigarro',
+        icon:'🚬',
+        name:'Bitucas de Cigarro — Três',
+        text:'Três bitucas de cigarro na beira do terraço. Só uma pessoa no grupo fuma: Joy. Ela ficou aqui tempo suficiente para fumar três cigarros. O terraço tem visão direta para a janela do escritório.',
+        suspects:['Joy'],
+        timelineEntry:{time:'23h–1h',text:'<strong>Joy</strong> ficou no terraço por tempo prolongado — com visão direta ao escritório.'},
+      },
+      {
+        id:'c_observacao',
+        icon:'👁️',
+        name:'Marca no Parapeito',
+        text:'Uma marca de cotovelo na poeira do parapeito — alguém se debruçou aqui por longo tempo, olhando para baixo. A posição exata dá linha de visão para a porta do escritório de Duarte.',
+        suspects:['Joy','Ellie'],
+        timelineEntry:{time:'Noite',text:'Alguém observou a entrada do escritório do terraço durante a noite.'},
+      },
+    ]
+  },
+  {
+    id:'quarto_duarte',
+    name:'Quarto de Duarte',
+    icon:'🛏️',
+    hint:'Dormiu aqui pela última vez',
+    color:'#604010',
+    desc:'Quarto ordenado — Duarte era metódico. Mas o criado-mudo está com a gaveta levemente aberta. Um retrato da família foi virado com a face para baixo. E sobre o travesseiro: uma única rosa branca.',
+    atmosphere:'A intimidade de um homem que sabia mais do que revelava.',
+    clues:[
+      {
+        id:'c_retrato',
+        icon:'🖼️',
+        name:'Retrato Virado',
+        text:'Uma foto de família — Duarte jovem com esposa e filhas Joy e Ellie — está com a face para baixo. Parece ter sido virado recentemente. Também há uma foto oculta atrás: Duarte com uma mulher jovem que não é reconhecível. No verso: "Minha Léa. 1993."',
+        suspects:['Joy','Ellie','Mel'],
+        timelineEntry:{time:'Passado',text:'<strong>Duarte</strong> tinha uma filha oculta — cujo retrato guardava secretamente.'},
+      },
+      {
+        id:'c_medicamento',
+        icon:'💊',
+        name:'Medicamentos Manipulados',
+        text:'Na gaveta do criado-mudo: uma caixa de remédios cardíacos de Duarte. Duas pílulas foram trocadas por comprimidos de aparência idêntica mas composição diferente — um sedativo potente. A morte pode não ter sido natural.',
+        suspects:['Mary','Stephany','Pollyana'],
+        timelineEntry:{time:'Antes da morte',text:'Os remédios de <strong>Duarte</strong> foram manipulados — sedativo substituído pelo cardíaco.'},
+        isKey: true,
+      },
+    ]
+  },
+  {
+    id:'jardim',
+    name:'Jardim / Estábulo',
+    icon:'🌿',
+    hint:'Área externa — rota de fuga?',
+    color:'#106030',
+    desc:'O jardim está encharcado do orvalho da madrugada. Uma trilha de pisadas leva do corredor lateral até o estábulo convertido em garagem. A portinhola dos fundos está destrancada — de dentro.',
+    atmosphere:'Alguém saiu. Ou voltou. A terra úmida guarda a verdade.',
+    clues:[
+      {
+        id:'c_pegadas',
+        icon:'👣',
+        name:'Trilha de Pisadas — Dois Pares',
+        text:'Dois conjuntos de pegadas no barro: um maior (provavelmente masculino), um menor. Saíram juntos e voltaram separados. As pegadas menores terminam perto da porta da cozinha. As maiores, perto da entrada do escritório.',
+        suspects:['Eros','Carluz','Mary'],
+        timelineEntry:{time:'Madrugada',text:'Duas pessoas saíram juntas pelo jardim durante a madrugada — e voltaram separadas.'},
+      },
+      {
+        id:'c_envelope',
+        icon:'📬',
+        name:'Envelope Queimado Parcialmente',
+        text:'Na lata de lixo do estábulo: um envelope parcialmente queimado. O endereçamento sobreviveu: "Para ser aberto somente após minha morte — Duarte Vasconcelos." O conteúdo foi retirado antes da queima. Alguém tentou destruir a prova da existência desse envelope.',
+        suspects:['Pollyana','Joy','Eros'],
+        timelineEntry:{time:'Noite',text:'Um envelope lacrado de <strong>Duarte</strong> foi aberto e seu conteúdo removido.'},
+        isKey: true,
+      },
+    ]
+  },
+  {
+    id:'cozinha',
+    name:'Cozinha',
+    icon:'☕',
+    hint:'Coração da villa — sempre movimentada',
+    color:'#802010',
+    desc:'Cheira a café forte e erva cidreira. A cafeteira tem marcação de preparo — 2h47 da madrugada. Dois canecões foram usados. Na pia, lavados às pressas: duas xícaras com resíduos de chá de ervas. Na bancada: um mortar com resíduos de planta moída.',
+    atmosphere:'Conversas que não deveriam acontecer acontecem na cozinha de madrugada.',
+    clues:[
+      {
+        id:'c_cafe',
+        icon:'☕',
+        name:'Café das 2h47 — Dois Canecões',
+        text:'A cafeteira automática registra o último preparo: 2h47. Dois canecões foram usados e mal lavados. Alguém estava acordado a quase 3h da manhã — e tinha companhia.',
+        suspects:['Mary','Carluz','Eros'],
+        timelineEntry:{time:'2h47',text:'Duas pessoas tomaram café na cozinha a quase 3h da madrugada.'},
+      },
+      {
+        id:'c_ervas',
+        icon:'🌱',
+        name:'Mortar com Ervas Sedativas',
+        text:'Na bancada: resíduos de valeriana, passiflora e uma terceira erva no mortar. Combinadas em alta concentração, causam sedação profunda — idêntica aos efeitos de uma parada cardíaca em pessoas com histórico de arritmia. Mary tem conhecimento de fitoterapia.',
+        suspects:['Mary','Stephany'],
+        timelineEntry:{time:'Antes da morte',text:'Ervas sedativas foram processadas na cozinha — potencialmente adicionadas à medicação de <strong>Duarte</strong>.'},
+        isKey: true,
+      },
+    ]
+  },
+  {
+    id:'garagem',
+    name:'Garagem / Adega',
+    icon:'🍾',
+    hint:'Lugar de segredos guardados',
+    color:'#404060',
+    desc:'A adega tem uma área privatizada com cadeado — aberto com força. Dentro: garrafas raras e, no fundo, uma caixa de metal enferrujada. A caixa está vazia, mas o fundo tem papel amassado com números: pode ser outra combinação.',
+    atmosphere:'Nem todos os segredos ficam no cofre principal.',
+    clues:[
+      {
+        id:'c_caixa',
+        icon:'📦',
+        name:'Caixa Metálica Vazia — Combinação',
+        text:'Caixa de metal aberta com força. No fundo: papel com "13 · 07 · 1952" — a data de nascimento de Duarte. Era uma combinação de backup? O cofre principal tem combinação diferente — alguém conhecia as duas.',
+        suspects:['Pollyana','Stephany','Joy'],
+        timelineEntry:{time:'Noite',text:'Uma caixa secreta na adega foi forçada aberta — provavelmente com documentos adicionais.'},
+      },
+      {
+        id:'c_gravacao',
+        icon:'🎙️',
+        name:'Gravador — Mensagem de Voz',
+        text:'Escondido sob um pano: um gravador analógico. A fita está quase no fim. A última gravação — qualidade ruim mas audível: voz masculina, possivelmente Duarte: "...se algo me acontecer antes de amanhã, saibam que foi ela quem me avisou. Mel tinha razão desde o início. O testamento está em..."  — A fita para abruptamente.',
+        suspects:['Mel','Joy','Stephany'],
+        timelineEntry:{time:'Antes da morte',text:'<strong>Duarte</strong> gravou uma mensagem de emergência — a fita foi cortada propositalmente.'},
+        isKey: true,
+      },
+    ]
+  },
+];
+
+// ════════════════════════════════════════════════════════════
+//  INTERROGATION DATA
+// ════════════════════════════════════════════════════════════
+const INTERROGATIONS = {
+
+  Joy: {
+    intro: 'Joy está no terraço, de frente para o jardim. Não se levanta quando você chega. Acende um cigarro sem te oferecer um.',
+    questions: [
+      {
+        q: 'Onde você estava depois das 22h?',
+        a: 'No terraço. Com o meu vinho. Sozinha. Onde qualquer pessoa com dignidade estaria depois daquela farsa de jantar.',
+        clue: null, lie: false,
+        suspectDelta:{Joy:5},
+      },
+      {
+        q: 'Você sabia o que estava no testamento?',
+        a: '<em>(longa pausa)</em> Sabia que meu pai tinha ficado louco nos últimos anos. Não sabia que teria chegado a esse ponto.',
+        clue: '⚠️ Joy sabia que seria prejudicada no testamento. Motivo sólido.',
+        lie: false,
+        suspectDelta:{Joy:20},
+        connection:{chars:['Joy','Mel'],desc:'Joy sabia da existência de Mel e da mudança testamentária antes da noite.'},
+      },
+      {
+        q: 'Do terraço dá pra ver o escritório. Você viu algo?',
+        a: '<em>(hesita. Fuma)</em> Vi a luz acender às 23h e apagar às 23h40. Depois acender de novo perto de 1h. Não vi quem entrou. Estava... ocupada pensando.',
+        clue: '🔍 CRUCIAL: O escritório foi visitado às 23h e de novo à 1h — dois momentos distintos.',
+        lie: false,
+        suspectDelta:{Joy:0},
+        timelineEntry:{time:'23h / 1h',text:'<strong>Joy</strong> confirma: luz do escritório acendeu em dois horários diferentes.'},
+      },
+      {
+        q: 'Você tinha acesso à combinação do cofre?',
+        a: 'Não. Meu pai nunca me deu essa informação. Achou que eu usaria pra mal.',
+        clue: null, lie: true,
+        lieNote: 'O diário de Duarte registra que ele mostrou a combinação a Joy em 2019 "em caso de emergência". Ela sabia.',
+        suspectDelta:{Joy:25},
+      },
+      {
+        q: 'Você tomou algo para dormir esta noite?',
+        a: '<em>(ri amargamente)</em> Tomei o que sempre tomo. O vinho da adega dele. Bastante.',
+        clue: null, lie: false,
+        suspectDelta:{Joy:-5},
+      },
+      {
+        q: 'Onde você acha que está o testamento?',
+        a: '<em>(te olha nos olhos pela primeira vez)</em> Acho que alguém que tinha muito mais a perder do que eu foi buscar antes que a gente acordasse. E acho que você sabe exatamente quem.',
+        clue: '⚠️ Joy implica que outra pessoa tinha motivo ainda maior — mas não nomeia.',
+        lie: false,
+        suspectDelta:{Joy:-10},
+      },
+    ]
+  },
+
+  Ellie: {
+    intro: 'Ellie está na biblioteca quando você a encontra — mesmo com tudo acontecendo, estava lendo. Fecha o livro devagar. Te observa.',
+    questions: [
+      {
+        q: 'Onde você estava depois do jantar?',
+        a: 'Aqui. Lendo. Depois fui dormir cedo — antes de meia-noite. Não sou boa com reuniões de família.',
+        clue: null, lie: true,
+        lieNote: 'A cafeteira registra dois canecões a 2h47. Ellie foi vista pelo espelho do corredor às 2h pela Mary.',
+        suspectDelta:{Ellie:15},
+      },
+      {
+        q: 'Você e sua irmã Joy se dão bem?',
+        a: '<em>(pequena pausa)</em> A Joy é a Joy. Ela sempre quis tudo. Eu aprendi a querer menos. Funciona melhor.',
+        clue: null, lie: false,
+        suspectDelta:{Ellie:0},
+      },
+      {
+        q: 'Você sabia da existência de Mel?',
+        a: '<em>(olha para longe)</em> Meu pai tinha segredos. Alguns eu sabia. Outros... aprendi esta noite com os outros.',
+        clue: '⚠️ Resposta evasiva — Ellie pode saber mais do que admite sobre Mel.',
+        lie: false,
+        suspectDelta:{Ellie:10},
+      },
+      {
+        q: 'Você tem conhecimento de botânica ou plantas medicinais?',
+        a: 'Algum. Minha mãe cultivava ervas no jardim quando éramos novas. Aprendi o básico.',
+        clue: '🔍 Ellie tem conhecimento de ervas — relevante dado o mortar na cozinha.',
+        lie: false,
+        suspectDelta:{Ellie:20},
+        connection:{chars:['Ellie','Mary'],desc:'Tanto Ellie quanto Mary têm conhecimento de plantas medicinais.'},
+      },
+      {
+        q: 'Você suspeita de alguém?',
+        a: '<em>(considera longamente)</em> A Stephany redigiu o testamento. Só ela sabia o conteúdo completo. E ela foi a única que pareceu... menos surpresa quando a Joy entrou em colapso.',
+        clue: '⚠️ Ellie aponta Stephany. Mas Stephany tinha tudo a perder revelando o documento — não ocultando.',
+        lie: false,
+        suspectDelta:{Ellie:0,Stephany:15},
+      },
+    ]
+  },
+
+  Stephany: {
+    intro: 'Stephany está ao telefone quando você entra. Encerra a ligação — "Depois." — e te recebe com a postura de quem passou a vida em salas de tribunal.',
+    questions: [
+      {
+        q: 'Você redigiu o testamento. O que estava escrito?',
+        a: 'Isso é protegido por sigilo profissional. Posso confirmar que havia uma divisão não convencional da fortuna e que havia cláusulas específicas para situações de morte suspeita.',
+        clue: '🔍 Havia cláusulas para morte suspeita — Duarte temia ser assassinado?',
+        lie: false,
+        suspectDelta:{Stephany:10},
+        timelineEntry:{time:'Contexto',text:'<strong>Duarte</strong> incluiu cláusulas de morte suspeita no testamento — sabia do risco.'},
+      },
+      {
+        q: 'Onde você estava depois das 22h?',
+        a: 'No meu quarto. Acordei às 7h com o grito da Mary. Não saí da cama depois das 22h30.',
+        clue: null, lie: true,
+        lieNote: 'Rastro de areia branca dos mosaicos do terraço foi encontrado no tapete do corredor perto do quarto de Stephany. Ela saiu.',
+        suspectDelta:{Stephany:25},
+      },
+      {
+        q: 'Quem mais conhecia a combinação do cofre?',
+        a: 'O Sr. Duarte e eu. Ponto final. A combinação não foi compartilhada com nenhum herdeiro por instrução expressa dele.',
+        clue: null, lie: false,
+        suspectDelta:{Stephany:15},
+      },
+      {
+        q: 'Se o testamento desapareceu, quem é beneficiado?',
+        a: '<em>(escolhe bem as palavras)</em> Sem testamento válido, a herança segue a sucessão legal. As filhas legítimas — Joy e Ellie — dividem tudo. Mel não recebe nada. Eros e Pollyana perdem participação.',
+        clue: '⚠️ SEM testamento: Joy e Ellie ganham tudo. COM testamento: Mel, Pollyana e Eros ganham mais.',
+        lie: false,
+        suspectDelta:{Stephany:0,Joy:10,Ellie:10},
+        connection:{chars:['Joy','Ellie'],desc:'Sem testamento, Joy e Ellie herdam tudo — maior motivo para o furto.'},
+      },
+      {
+        q: 'Você acha que a morte foi natural?',
+        a: '<em>(pausa longa. Te olha nos olhos)</em> Duarte tinha 74 anos e histórico cardíaco. A causa oficial é parada cardíaca. Mas ele estava bem ontem de tarde — conversamos por 40 minutos. Ele estava... resolvido. Em paz.',
+        clue: '⚠️ Stephany sugere indiretamente que a morte pode não ter sido natural.',
+        lie: false,
+        suspectDelta:{Stephany:-5},
+        timelineEntry:{time:'Tarde',text:'<strong>Stephany</strong> e Duarte conversaram por 40 minutos à tarde — ele estava "em paz".'},
+      },
+    ]
+  },
+
+  Mary: {
+    intro: 'Mary está na cozinha. Chorando não — mas os olhos estão vermelhos. Prepara chá enquanto fala. Seus movimentos são precisos demais para alguém destruído.',
+    questions: [
+      {
+        q: 'Você trabalhava com Duarte há 11 anos. O que aconteceu esta noite?',
+        a: '<em>(pausa)</em> Eu servi o jantar. Recolhi as louças. Fui pra cozinha e fiquei lá até tarde porque não conseguia dormir. Acordei com o grito da Joy.',
+        clue: null, lie: false,
+        suspectDelta:{Mary:5},
+      },
+      {
+        q: 'Você conhecia a medicação de Duarte?',
+        a: 'Controlava há seis anos. Comprava, separava, lembrava quando tomar. Era de confiança total.',
+        clue: '⚠️ Mary tinha acesso e conhecimento total da medicação — e sabia manipulá-la.',
+        lie: false,
+        suspectDelta:{Mary:25},
+      },
+      {
+        q: 'Você sabe o que estava no testamento?',
+        a: 'Sabia de algumas partes. O sr. Duarte me contava as coisas. Mas não tudo.',
+        clue: '🔍 Mary sabia parte do testamento — possivelmente sabia que seria bem contemplada.',
+        lie: false,
+        suspectDelta:{Mary:10},
+        connection:{chars:['Mary','Duarte'],desc:'Mary era confidente pessoal de Duarte e conhecia partes do testamento.'},
+      },
+      {
+        q: 'Você tem conhecimento de fitoterapia?',
+        a: '<em>(olha para a janela)</em> Minha avó me ensinou muito sobre plantas. Tenho um caderno com receitas. O sr. Duarte me deixava cultivar ervas no jardim. Era de uso medicinal.',
+        clue: '⚠️ Mary confirma conhecimento avançado de fitoterapia — relevante dado o mortar com sedativos.',
+        lie: false,
+        suspectDelta:{Mary:30},
+      },
+      {
+        q: 'Você viu alguém no corredor durante a madrugada?',
+        a: 'Vi a Ellie perto das 2h. Ela foi ao banheiro — pelo menos foi o que eu presumi. Mas ela demorou.',
+        clue: '🔍 Mary viu Ellie no corredor às 2h — contradiz o álibi de Ellie.',
+        lie: false,
+        suspectDelta:{Mary:0,Ellie:20},
+        timelineEntry:{time:'2h',text:'<strong>Mary</strong> viu <strong>Ellie</strong> no corredor às 2h da madrugada.'},
+      },
+      {
+        q: 'O que você acha que aconteceu com o testamento?',
+        a: '<em>(coloca o chá na mesa. Para de mexer. Fala baixo)</em> Acho que alguém fez o que sempre faz quando não gosta de uma verdade: escondeu ela. Mas a verdade que estava naquele papel... ela continua existindo. Duarte se certificou disso.',
+        clue: '🔍 Mary insinua que Duarte tinha uma cópia backup ou prova adicional do testamento.',
+        lie: false,
+        suspectDelta:{Mary:-5},
+      },
+    ]
+  },
+
+  Mel: {
+    intro: 'Mel está sozinha no jardim, sentada no banco de pedra. Quando você chega, ela não foge — estava esperando. "Eu sei que preciso falar com alguém."',
+    questions: [
+      {
+        q: 'Quando você soube que era filha do Duarte?',
+        a: 'Três meses atrás. Ele me encontrou. Disse que tinha cometido um erro enorme deixando minha mãe ir embora. Que queria corrigir isso no testamento.',
+        clue: '🔍 Mel foi encontrada por Duarte 3 meses atrás — os outros não sabiam.',
+        lie: false,
+        suspectDelta:{Mel:0},
+        connection:{chars:['Mel','Joy'],desc:'Mel era a grande revelação do testamento — o que anularia anos de expectativa de Joy.'},
+        timelineEntry:{time:'3 meses atrás',text:'<strong>Duarte</strong> encontrou <strong>Mel</strong> e decidiu incluí-la no testamento.'},
+      },
+      {
+        q: 'Onde você estava depois da meia-noite?',
+        a: 'No jardim até por volta de 1h — precisava de ar, estava ansiosa. Depois fui ao escritório.',
+        clue: null, lie: false,
+        suspectDelta:{Mel:10},
+      },
+      {
+        q: 'Você foi ao escritório de Duarte durante a noite?',
+        a: '<em>(respira fundo)</em> Fui. Ele me chamou — às 23h. Tomamos bourbon juntos. Ele me mostrou onde o testamento estava guardado. Queria que eu soubesse. Quando saí, ele estava vivo.',
+        clue: '⚠️ REVELAÇÃO: Mel esteve no escritório às 23h — e sabe onde o testamento estava.',
+        lie: false,
+        suspectDelta:{Mel:15},
+        timelineEntry:{time:'23h',text:'<strong>Mel</strong> esteve no escritório — Duarte mostrou onde o testamento estava guardado.'},
+      },
+      {
+        q: 'Você sabe quem pode ter pegado o testamento?',
+        a: '<em>(engole seco)</em> Quando eu saí, às 23h40 ou por aí, vi uma sombra no corredor. Escondida. Esperando. Eu reconheci os sapatos — eram sapatos caros. Vermelhos.',
+        clue: '⚠️ CHAVE: Mel viu alguém esperando no corredor quando saiu — sapatos vermelhos.',
+        lie: false,
+        suspectDelta:{Mel:0,Joy:30,Pollyana:15},
+        timelineEntry:{time:'23h40',text:'<strong>Mel</strong> viu uma sombra com sapatos vermelhos no corredor ao sair do escritório.'},
+      },
+      {
+        q: 'Você tem medo de alguma pessoa aqui?',
+        a: 'Tenho medo do que as pessoas fazem quando sentem que vão perder algo. Qualquer pessoa daquela sala ontem à noite tinha motivo para me detestar — eu sou a razão pela qual metade deles perde parte da herança.',
+        clue: null, lie: false,
+        suspectDelta:{Mel:-5},
+      },
+    ]
+  },
+
+  Eros: {
+    intro: 'Eros está impecavelmente vestido para uma manhã após morte de familiar. Lê algo no telefone quando você entra. Guarda o aparelho com calma desconcertante.',
+    questions: [
+      {
+        q: 'Como você é relacionado ao Duarte?',
+        a: 'Primo distante. Mas ele me considerava próximo nos últimos anos. Cuidava dos investimentos internacionais dele. Uma relação de confiança.',
+        clue: null, lie: false,
+        suspectDelta:{Eros:0},
+      },
+      {
+        q: 'Você sabia que estaria no testamento?',
+        a: '<em>(leve sorriso)</em> Ele sugeriu. Nunca confirmou. Eu não fazia negócios com base em expectativas.',
+        clue: null, lie: true,
+        lieNote: 'Emails encontrados entre Eros e Duarte mostram que ele sabia exatamente quanto receberia e estava planejando investimentos com esse dinheiro.',
+        suspectDelta:{Eros:20},
+      },
+      {
+        q: 'Onde você estava depois do jantar?',
+        a: 'Na sala com o Carluz até umas 2h. Depois fomos ao jardim tomar ar. Voltei pelo caminho da cozinha.',
+        clue: '🔍 Eros confirma saída ao jardim na madrugada — correspondendo às pegadas duplas no barro.',
+        lie: false,
+        suspectDelta:{Eros:5},
+        timelineEntry:{time:'2h+',text:'<strong>Eros</strong> e <strong>Carluz</strong> saíram juntos pelo jardim — e voltaram separados.'},
+      },
+      {
+        q: 'Você tem acesso a informações sobre compostos sedativos?',
+        a: '<em>(pausa calculada)</em> Invisto em farmacêuticas. Tenho conhecimento geral do setor. Por que pergunta?',
+        clue: '⚠️ Eros tem conhecimento farmacêutico — potencialmente sabe sobre sedativos cardíacos.',
+        lie: false,
+        suspectDelta:{Eros:20},
+      },
+      {
+        q: 'O que Carluz fez quando vocês se separaram no jardim?',
+        a: '<em>(pausa longa)</em> Ele disse que ia fumar. Mas Carluz não fuma. Eu não perguntei mais.',
+        clue: '⚠️ Carluz mentiu para Eros sobre seus planos no jardim. O que fez sozinho?',
+        lie: false,
+        suspectDelta:{Eros:0,Carluz:25},
+        connection:{chars:['Eros','Carluz'],desc:'Eros e Carluz têm uma aliança — mas com rachaduras. Carluz mentiu sobre seus planos.'},
+      },
+    ]
+  },
+
+  Carluz: {
+    intro: 'Carluz parece ter dormido mal — ou não dormiu. Está na sala com o café já frio. Quando você entra, salta da poltrona mais rápido do que deveria.',
+    questions: [
+      {
+        q: 'Você foi excluído do testamento. Como ficou sabendo?',
+        a: 'Meu tio me avisou há duas semanas. Disse que havia mudado de ideia. Não quis explicar. Disse que eu entenderia "quando o momento certo chegasse".',
+        clue: '🔍 Carluz foi avisado da exclusão com duas semanas de antecedência — tempo para planejar.',
+        lie: false,
+        suspectDelta:{Carluz:10},
+        timelineEntry:{time:'2 semanas antes',text:'<strong>Duarte</strong> informou <strong>Carluz</strong> de sua exclusão do testamento.'},
+      },
+      {
+        q: 'Onde você estava depois da meia-noite?',
+        a: 'Com o Eros. Na sala até 2h, depois no jardim. Voltei para a sala depois.',
+        clue: null, lie: true,
+        lieNote: 'Eros revela que Carluz mentiu sobre ir "fumar" — eles se separaram no jardim e Carluz foi ao outro lado da villa.',
+        suspectDelta:{Carluz:20},
+      },
+      {
+        q: 'Você precisava do dinheiro da herança?',
+        a: '<em>(olha para o lado)</em> Tenho alguns investimentos mal colocados. Mas não é um problema que não possa resolver.',
+        clue: '⚠️ Carluz minimiza — registros indicam dívidas de R$ 340k com prazo curto de vencimento.',
+        lie: true,
+        lieNote: 'Carluz está endividado de forma grave. A herança era a única saída financeira.',
+        suspectDelta:{Carluz:30},
+        connection:{chars:['Carluz'],desc:'Carluz tem dívidas graves — a herança era essencial para sua sobrevivência financeira.'},
+      },
+      {
+        q: 'Você tentou copiar a chave do cofre?',
+        a: '<em>(engole. Pausa)</em> Que chave do cofre? Eu não tenho acesso ao escritório.',
+        clue: null, lie: true,
+        lieNote: 'A impressão de chave na biblioteca ainda tem traços de argila idêntica aos sapatos que Carluz usava ontem.',
+        suspectDelta:{Carluz:35},
+      },
+      {
+        q: 'Você abre o envelope queimado no estábulo?',
+        a: '<em>(reage visivelmente)</em> Eu... o que? Eu não sei do que você está falando.',
+        clue: '⚠️ Carluz claramente reconheceu o que você descreveu — e ficou assustado.',
+        lie: true,
+        lieNote: 'A reação de Carluz indica conhecimento do envelope — e do que havia dentro.',
+        suspectDelta:{Carluz:40},
+      },
+    ]
+  },
+
+  Pollyana: {
+    intro: 'Pollyana está arrumando as malas quando você a encontra. Lentamente. Com a calma de quem já processou tudo. "Eu sabia que você viria até mim por último."',
+    questions: [
+      {
+        q: 'Por que está arrumando as malas?',
+        a: 'Porque o que eu vim buscar aqui não existe mais. A presença dele não existe mais. O resto é burocracia.',
+        clue: null, lie: false,
+        suspectDelta:{Pollyana:5},
+      },
+      {
+        q: 'Você era a herdeira principal no testamento anterior. Como se sente agora?',
+        a: '<em>(para de dobrar a roupa)</em> O Duarte tinha o direito de mudar de ideia. Não me tornei inimiga da Mel por isso. Ela é filha dele. Faz sentido.',
+        clue: '🔍 Pollyana aceita a mudança com calma incomum — genuíno ou disfarce?',
+        lie: false,
+        suspectDelta:{Pollyana:10},
+      },
+      {
+        q: 'Onde você estava depois das 22h?',
+        a: 'No quarto lendo até meia-noite. Depois fui tomar água na cozinha. Vi a Mary lá. Depois voltei e dormi.',
+        clue: null, lie: false,
+        suspectDelta:{Pollyana:0},
+        connection:{chars:['Pollyana','Mary'],desc:'Pollyana e Mary se encontraram na cozinha depois da meia-noite.'},
+      },
+      {
+        q: 'Você usava sapatos vermelhos ontem à noite?',
+        a: '<em>(longa pausa. Te olha nos olhos)</em> Não. Eu usava os meus de couro marrom. Sempre uso quando viajo. Por que?',
+        clue: null, lie: false,
+        suspectDelta:{Pollyana:-10,Joy:15},
+      },
+      {
+        q: 'Você acha que a morte do Duarte foi natural?',
+        a: '<em>(fecha a mala. Se vira totalmente para você)</em> Ouça. Há seis meses, o Duarte me contou que tinha recebido ameaças — cartas anônimas. Ele guardou todas. Pediu que eu não contasse. Disse que tinha certeza de quem era, mas precisava de prova. Essas cartas estão escondidas no fundo do baú de roupas do quarto dele.',
+        clue: '⚠️ REVELAÇÃO MAJOR: Duarte recebia ameaças. Cartas escondidas no quarto.',
+        lie: false,
+        suspectDelta:{Pollyana:-20,Joy:20,Carluz:20},
+        timelineEntry:{time:'6 meses',text:'<strong>Duarte</strong> recebia cartas de ameaça anônimas — e guardou todas como evidência.'},
+        isKey: true,
+      },
+      {
+        q: 'Por que você não contou isso antes?',
+        a: 'Porque ele pediu. E porque eu queria encontrar as cartas primeiro para ter certeza que ainda estavam lá. <em>(olha para a janela)</em> Estão. Acabei de verificar esta manhã.',
+        clue: '🔍 As cartas de ameaça ainda existem — evidência física que aponta para o culpado.',
+        lie: false,
+        suspectDelta:{Pollyana:-10},
+      },
+    ]
+  },
+};
+
+// ════════════════════════════════════════════════════════════
+//  A VERDADE (oculta do jogador)
+// ════════════════════════════════════════════════════════════
+const TRUTH = {
+  culpado: 'Carluz',
+  motivo: 'divida',
+  metodo: 'chave',
+  story: {
+    Carluz_perfeito: {
+      type: 'correct',
+      headline: 'DETETIVE DESVENDA O CRIME DA VILLA OBSCURA',
+      text: [
+        'A verdade, como sempre, estava enterrada sob camadas de aparência. <strong>Carluz</strong> — o sobrinho excluído, o endividado, o desesperado — era o único naquele grupo que não tinha nada a perder sendo tudo perdido.',
+        'Duas semanas antes, ao ser informado de sua exclusão, Carluz começou a agir. Ele foi à biblioteca de estudo e, com argila que trazia nos sapatos do jardim, tentou reproduzir a chave do cofre usando a impressora de pó. Não conseguiu uma cópia funcional — mas durante essa pesquisa encontrou o segundo documento: o endereço da caixa metálica na adega, com a combinação de backup.',
+        'Na noite do jantar, Carluz fingiu ir com Eros ao jardim às 2h, separou-se dele e foi à adega. Forçou a caixa, encontrou ali uma cópia impressa do testamento — que Duarte havia guardado como backup. <strong>Carluz levou o documento e o parcialmente queimou no estábulo</strong>, acreditando que destruiria a evidência. Esqueceu o envelope.',
+        'Quanto à morte de Duarte: ela foi natural. A manipulação dos remédios era de muito antes — um ensaio de Mary, que nunca chegou a executar seu plano. Duarte morreu de coração essa noite, por coincidência ou destino. Carluz não planejou a morte — planejou o roubo. A confusão gerada pela morte foi o acidente que quase o livrou.',
+        '<em>A herança será distribuída conforme o testamento digital que Stephany guardava criptografado — Duarte tinha previsto a possibilidade de o original desaparecer.</em>',
+      ]
+    },
+    Carluz_motivo_errado: {
+      type: 'partial',
+      headline: 'ACUSAÇÃO CERTA — MOTIVO IMPRECISO',
+      text: [
+        'Você chegou ao culpado certo: <strong>Carluz</strong>. Mas o motivo era mais simples e urgente do que pareceu.',
+        'Não era vingança nem ressentimento — era desespero financeiro puro. R$340 mil em dívidas com prazo de vencimento em 30 dias. A herança era a única saída. Quando foi excluído, não encontrou outra alternativa que não fosse interferir.',
+        'O roubo do testamento era uma aposta: sem o documento, a herança seguiria a lei — e ele, como herdeiro legal pela linha familiar, receberia uma parte. Calculou mal, porque Stephany tinha cópia digital.',
+        '<em>A investigação foi sólida. Faltou entender que crime desesperado raramente vem de ódio.</em>',
+      ]
+    },
+    Carluz_metodo_errado: {
+      type: 'partial',
+      headline: 'ACUSAÇÃO CERTA — MÉTODO INCORRETO',
+      text: [
+        '<strong>Carluz</strong> era o culpado, sim. Mas o método foi diferente do que você imaginou.',
+        'Ele não usou a combinação do cofre principal — na verdade, nunca conseguiu isso. Acessou uma cópia do testamento guardada em uma caixa metálica secundária na adega, com a combinação de backup que descobriu na biblioteca.',
+        'O cofre principal provavelmente foi aberto por Joy, que sabia a combinação — mas ela abriu apenas para olhar, e devolveu o documento original para o lugar. Carluz roubou a cópia. Distinção crucial.',
+        '<em>Boa investigação. O detalhe do método foi o mais difícil de reconstituir.</em>',
+      ]
+    },
+    Joy: {
+      type: 'wrong',
+      headline: 'ACUSAÇÃO ERRADA — JOY É INOCENTE DO ROUBO',
+      text: [
+        'Joy tinha motivo, oportunidade e temperamento — a suspeita mais óbvia. Mas não roubou o testamento.',
+        'Ela estava no terraço fumando e viu os movimentos. Quando Mel saiu do escritório às 23h40, Joy entrou — e abriu o cofre com a combinação que seu pai lhe dera anos atrás. Leu o testamento. Ficou destruída. Mas devolveu o documento exatamente onde estava.',
+        'Joy cometeu invasão de privacidade. Não roubou. Quem roubou foi <strong>Carluz</strong> — a cópia guardada na adega, que Joy nem sabia que existia.',
+        '<em>A acusação mais tentadora é raramente a correta. Investigar mais revelaria o rastro de argila nos sapatos de Carluz.</em>',
+      ]
+    },
+    Mary: {
+      type: 'wrong',
+      headline: 'ACUSAÇÃO ERRADA — MARY NÃO ROUBOU O TESTAMENTO',
+      text: [
+        'Mary é a mais culpada do grupo — mas não pelo roubo do testamento.',
+        'Ela manipulou os remédios de Duarte há meses — um plano que nunca chegou a executar porque hesitou. Duarte morreu de causa natural antes disso. Mary carrega uma culpa real — de intenção, não de ação.',
+        'Mas o testamento foi roubado por <strong>Carluz</strong>, não por Mary. Mary estava na cozinha fazendo chá às 2h47 — com Ellie, que também não dormiu naquela noite.',
+        '<em>Você encontrou o personagem mais moralmente culpado — mas não o autor do roubo específico.</em>',
+      ]
+    },
+    other: {
+      type: 'wrong',
+      headline: 'ACUSAÇÃO INCORRETA — O CULPADO ESCAPA',
+      text: [
+        'O testamento não foi encontrado. O culpado escapa.',
+        '<strong>Carluz</strong> roubou a cópia do testamento guardada na caixa metálica da adega. Endividado em R$340 mil, desesperado após ser excluído, agiu na madrugada enquanto fingia estar com Eros no jardim.',
+        'As pistas estavam lá: a argila dos sapatos, a impressão de chave na biblioteca, o envelope queimado, a reação ao ser confrontado. O rastro era claro para quem soubesse onde olhar.',
+        '<em>A verdade ainda está enterrada nessa villa. Mas com Stephany guardando cópia digital, o testamento será lido — e a herança, distribuída.</em>',
+      ]
+    }
+  }
+};
+
+// ════════════════════════════════════════════════════════════
+//  GAME STATE
+// ════════════════════════════════════════════════════════════
+let G = {
+  cluesFound: new Set(),
+  roomsVisited: new Set(),
+  charsInterrogated: new Set(),
+  questionsAsked: {},
+  suspicion: {Pollyana:0,Carluz:0,Eros:0,Stephany:0,Mary:0,Mel:0,Joy:0,Ellie:0},
+  liesDetected: new Set(),
+  connections: new Set(),
+  timelineEntries: [],
+  accusationData: {culpado:'',motivo:'',metodo:''},
+  phase: 1,
+  keyReveals: new Set(),
+};
+
+// ════════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════════
+function startGame() {
+  document.getElementById('splash').style.display = 'none';
+  document.getElementById('game').style.display = 'block';
+  buildAlibiList();
+  buildRoomsGrid();
+  buildCharsGrid();
+  buildSuspectMeters();
+  buildProgressList();
+  updateTopStats();
+}
+
+function buildAlibiList() {
+  const el = document.getElementById('alibi-list');
+  el.innerHTML = Object.entries(CHARACTERS).map(([name,cfg]) => `
+    <div class="alibi-item" id="alibi-${name}" onclick="openChar('${name}')">
+      <div class="alibi-dot" style="background:${cfg.color}"></div>
+      <div class="alibi-name">${name}</div>
+      <div class="alibi-tag unknown" id="at-${name}">—</div>
+    </div>
+  `).join('');
+}
+
+function buildRoomsGrid() {
+  const grid = document.getElementById('rooms-grid');
+  grid.innerHTML = ROOMS.map(r => `
+    <div class="room-card" id="room-${r.id}" style="--card-color:${r.color}" onclick="openRoom('${r.id}')">
+      <div class="room-check">✓</div>
+      <span class="room-icon">${r.icon}</span>
+      <div class="room-name">${r.name}</div>
+      <div class="room-hint">${r.hint}</div>
+      <div class="room-clue-count" id="rcc-${r.id}"></div>
+    </div>
+  `).join('');
+}
+
+function buildCharsGrid() {
+  const grid = document.getElementById('chars-grid');
+  grid.innerHTML = Object.entries(CHARACTERS).map(([name,cfg]) => `
+    <div class="char-card" id="cc-${name}" onclick="openChar('${name}')">
+      <div class="char-card-banner" style="background:linear-gradient(180deg,${cfg.color}33,${cfg.color}11)">
+        <span style="filter:drop-shadow(0 0 10px ${cfg.color}88)">${cfg.emoji}</span>
+      </div>
+      <div class="char-card-info">
+        <div class="char-card-name">${name}</div>
+        <div class="char-card-role">${cfg.role}</div>
+        <div class="char-card-alibi">${cfg.alibi}</div>
+      </div>
+      <div class="char-interro-count" id="cic-${name}"></div>
+    </div>
+  `).join('');
+}
+
+function buildSuspectMeters() {
+  const c = document.getElementById('suspect-meters');
+  c.innerHTML = Object.entries(CHARACTERS).map(([name,cfg]) => `
+    <div class="suspect-row" onclick="openChar('${name}')">
+      <div class="sr-top">
+        <div class="sr-dot" style="background:${cfg.color}"></div>
+        <div class="sr-name">${name}</div>
+        <div class="sr-pts" id="srp-${name}">0</div>
+      </div>
+      <div class="sr-bar">
+        <div class="sr-fill" id="srf-${name}" style="width:0%;background:${cfg.color}"></div>
+      </div>
+      <div class="sr-verdict" id="srv-${name}">Sem dados</div>
+    </div>
+  `).join('');
+}
+
+const PROGRESS_ITEMS_DEF = [
+  {id:'rooms5', text:'Investigar pelo menos 5 cômodos', icon:'🏛️', check:()=>G.roomsVisited.size>=5},
+  {id:'rooms_all', text:'Investigar todos os cômodos', icon:'🗝️', check:()=>G.roomsVisited.size>=ROOMS.length},
+  {id:'chars4', text:'Interrogar pelo menos 4 suspeitos', icon:'👤', check:()=>G.charsInterrogated.size>=4},
+  {id:'chars_all', text:'Interrogar todos os suspeitos', icon:'🕵️', check:()=>G.charsInterrogated.size>=8},
+  {id:'lies3', text:'Detectar 3 ou mais mentiras', icon:'⚠️', check:()=>G.liesDetected.size>=3},
+  {id:'clues8', text:'Coletar 8 ou mais pistas', icon:'🔍', check:()=>G.cluesFound.size>=8},
+  {id:'key_reveals', text:'Descobrir 3+ revelações-chave', icon:'💡', check:()=>G.keyReveals.size>=3},
+  {id:'theory', text:'Formular teoria completa', icon:'📋', check:()=>{
+    const c=document.getElementById('theory-culpado')?.value;
+    const m=document.getElementById('theory-motivo')?.value;
+    const me=document.getElementById('theory-metodo')?.value;
+    return !!(c&&m&&me);
+  }},
+];
+
+function buildProgressList() {
+  const el = document.getElementById('progress-list');
+  el.innerHTML = PROGRESS_ITEMS_DEF.map(p=>`
+    <div class="progress-item" id="prog-${p.id}">
+      <span class="prog-icon">${p.icon}</span>
+      <span class="prog-text">${p.text}</span>
+      <span class="prog-check" id="pgc-${p.id}">○</span>
+    </div>
+  `).join('');
+}
+
+// ════════════════════════════════════════════════════════════
+//  ROOMS
+// ════════════════════════════════════════════════════════════
+function openRoom(id) {
+  const room = ROOMS.find(r=>r.id===id);
+  if(!room) return;
+
+  const isFirst = !G.roomsVisited.has(id);
+  G.roomsVisited.add(id);
+  document.getElementById(`room-${id}`).classList.add('visited');
+
+  const newClues = room.clues.filter(c=>!G.cluesFound.has(c.id));
+  const foundClues = room.clues.filter(c=>G.cluesFound.has(c.id));
+
+  newClues.forEach(c=>{
+    G.cluesFound.add(c.id);
+    addEvidence(c);
+    (c.suspects||[]).forEach(s=>{if(G.suspicion[s]!==undefined)G.suspicion[s]+=6});
+    if(c.timelineEntry) addTimeline(c.timelineEntry.time, c.timelineEntry.text);
+    if(c.isKey) G.keyReveals.add(c.id);
+  });
+
+  if(newClues.length>0) {
+    document.getElementById(`room-${id}`).classList.remove('has-unread');
+  }
+
+  updateSuspectMeters();
+  updateProgress();
+
+  // Modal
+  document.getElementById('modal-title').textContent = room.name;
+  document.getElementById('modal-subtitle').textContent = room.hint;
+
+  let body = `<div class="room-scene-text">${room.desc}</div>`;
+  if(room.atmosphere) body += `<div class="room-atmosphere">${room.atmosphere}</div>`;
+
+  if(newClues.length>0) {
+    body += newClues.map(c=>`
+      <div class="clue-card">
+        <div class="clue-card-icon">${c.icon}</div>
+        <div>
+          <div class="clue-card-name">🆕 ${c.name}</div>
+          <div class="clue-card-text">${c.text}</div>
+          ${c.suspects?.length ? `<div class="clue-card-suspects">Suspeitos relacionados: ${c.suspects.join(' · ')}</div>` : ''}
+        </div>
+      </div>`).join('');
+    body += `<div style="font-size:11px;font-style:italic;color:var(--ink4);text-align:center;margin-top:12px">${newClues.length} nova(s) pista(s) adicionada(s) às evidências</div>`;
+  } else if(foundClues.length>0) {
+    body += `<div class="clue-card already-found">
+      <div class="clue-card-icon">🔍</div>
+      <div><div class="clue-card-name">Pistas já registradas</div><div class="clue-card-text">Este cômodo foi examinado. Todas as pistas foram coletadas.</div></div>
+    </div>`;
+    body += foundClues.map(c=>`
+      <div class="clue-card already-found">
+        <div class="clue-card-icon">${c.icon}</div>
+        <div><div class="clue-card-name">${c.name}</div><div class="clue-card-text">${c.text}</div></div>
+      </div>`).join('');
+  } else {
+    body += `<div class="clue-card already-found">
+      <div class="clue-card-icon">🤔</div>
+      <div><div class="clue-card-name">Nada encontrado aqui</div><div class="clue-card-text">Você examinou cuidadosamente. Nenhuma pista relevante neste cômodo.</div></div>
+    </div>`;
+  }
+
+  document.getElementById('modal-body').innerHTML = body;
+  document.getElementById('modal-overlay').classList.add('open');
+
+  if(newClues.length>0) showToast(`🔍 ${newClues.length} pista(s) em: ${room.name}`);
+
+  updateRoomCounter(id, room);
+}
+
+function updateRoomCounter(id, room) {
+  const el = document.getElementById(`rcc-${id}`);
+  if(el) {
+    const found = room.clues.filter(c=>G.cluesFound.has(c.id)).length;
+    el.textContent = found ? `${found}/${room.clues.length} pistas` : '';
+  }
+}
+
+function addEvidence(clue) {
+  const list = document.getElementById('evidence-list');
+  const empty = list.querySelector('div[style]');
+  if(empty) empty.remove();
+  const d = document.createElement('div');
+  d.className='evidence-item new';
+  d.id=`ev-${clue.id}`;
+  d.innerHTML=`
+    <div class="ev-icon">${clue.icon}</div>
+    <div>
+      <div class="ev-name">${clue.name}<span class="ev-badge">NOVO</span></div>
+      <div class="ev-desc">${clue.text.substring(0,90)}...</div>
+    </div>`;
+  list.prepend(d);
+  setTimeout(()=>{
+    d.classList.remove('new');
+    d.querySelector('.ev-badge')?.remove();
+  },6000);
+}
+
+function addTimeline(time, text) {
+  const entry = {time, text};
+  G.timelineEntries.push(entry);
+  // Sort roughly by time label
+  const list = document.getElementById('timeline-list');
+  const empty = list.querySelector('div[style]');
+  if(empty) empty.remove();
+  const d = document.createElement('div');
+  d.className='timeline-entry';
+  d.innerHTML=`<div class="tl-time">${time}</div><div class="tl-text">${text}</div>`;
+  list.appendChild(d);
+}
+
+// ════════════════════════════════════════════════════════════
+//  CHARACTER INTERROGATION
+// ════════════════════════════════════════════════════════════
+function openChar(name) {
+  const interro = INTERROGATIONS[name];
+  if(!interro) return;
+  const cfg = CHARACTERS[name];
+  if(!G.questionsAsked[name]) G.questionsAsked[name] = new Set();
+  const isReturn = G.charsInterrogated.has(name);
+  G.charsInterrogated.add(name);
+
+  document.getElementById('modal-title').textContent = `${cfg.emoji}  ${name}`;
+  document.getElementById('modal-subtitle').textContent = cfg.role + '  ·  ' + cfg.alibi;
+  renderInterrogation(name, interro, cfg, isReturn);
+  document.getElementById('modal-overlay').classList.add('open');
+
+  // Update alibi tag
+  const at = document.getElementById(`at-${name}`);
+  if(at && at.textContent==='—') {at.textContent='Interrogado';at.className='alibi-tag partial';}
+
+  // Update char card counter
+  const cic = document.getElementById(`cic-${name}`);
+  const asked = (G.questionsAsked[name]||new Set()).size;
+  const total = interro.questions.length;
+  if(cic) cic.textContent = asked>0 ? `${asked}/${total} perguntas` : '';
+
+  updateProgress();
+}
+
+function renderInterrogation(name, interro, cfg, isReturn) {
+  const asked = G.questionsAsked[name] || new Set();
+
+  const questionsHtml = interro.questions.map((q,qi)=>{
+    const isAsked = asked.has(qi);
+    const keyClass = q.isKey ? 'key-question' : '';
+    return `<button class="q-btn ${keyClass} ${isAsked?'asked':''}"
+      onclick="${isAsked?'':'askQuestion(\''+name+'\','+qi+')'}" ${isAsked?'disabled':''}>
+      <div class="q-num">${qi+1}</div>
+      <div>"${q.q}"</div>
+    </button>`;
+  }).join('');
+
+  const answersHtml = [...asked].sort((a,b)=>b-a).map(qi=>{
+    const q = interro.questions[qi];
+    return buildAnswerHtml(name,q,qi,cfg);
+  }).join('');
+
+  const portrait = `
+    <div class="interro-portrait" style="border-color:${cfg.color}33">
+      <div class="interro-emoji">${cfg.emoji}</div>
+      <div>
+        <div class="interro-name" style="color:${cfg.color}">${name}</div>
+        <div class="interro-role">${cfg.role}</div>
+        <div class="interro-alibi">Álibi declarado: ${cfg.alibi}</div>
+      </div>
+    </div>`;
+
+  document.getElementById('modal-body').innerHTML = `
+    ${portrait}
+    ${isReturn ? '<div class="reinquiry-note">Segundo interrogatório — personagem pode ser mais receptivo</div>' : ''}
+    <div class="interro-intro">${interro.intro}</div>
+    <div class="question-list">${questionsHtml}</div>
+    <div id="answers-area">${answersHtml}</div>
+  `;
+}
+
+function buildAnswerHtml(name, q, qi, cfg) {
+  const isLie = q.lie && G.liesDetected.has(`${name}-${qi}`);
+  return `
+    <div class="answer-card" style="--char-color:${cfg.color}">
+      <div class="answer-speaker" style="color:${cfg.color}">${name}</div>
+      <div class="answer-text">${q.a}</div>
+      ${q.clue ? `<div class="answer-clue">🔍 ${q.clue}</div>` : ''}
+      ${isLie ? `<div class="answer-lie">⚠️ MENTIRA DETECTADA: ${q.lieNote}</div>` : ''}
+      ${q.connection && !q.lie ? `<div class="answer-newinfo">🕸️ Conexão descoberta: ${q.connection.desc}</div>` : ''}
+    </div>`;
+}
+
+function askQuestion(name, qi) {
+  const interro = INTERROGATIONS[name];
+  const q = interro.questions[qi];
+  const cfg = CHARACTERS[name];
+  if(!q) return;
+
+  G.questionsAsked[name].add(qi);
+
+  // Suspicion deltas
+  if(q.suspectDelta) {
+    Object.entries(q.suspectDelta).forEach(([char,delta])=>{
+      if(G.suspicion[char]!==undefined) G.suspicion[char] = Math.max(0,G.suspicion[char]+delta);
+    });
+  }
+
+  // Lie detection — after at least 2 questions to same person
+  if(q.lie && G.questionsAsked[name].size >= 2) {
+    G.liesDetected.add(`${name}-${qi}`);
+    updateAlibiStatus(name,'lied');
+    showToast(`⚠️ Mentira detectada — ${name}`);
+  } else if(!q.lie && !G.liesDetected.has(`${name}-${qi}`)) {
+    // Maybe eventually mark as cleared
+  }
+
+  // Timeline
+  if(q.timelineEntry) addTimeline(q.timelineEntry.time, q.timelineEntry.text);
+
+  // Connection
+  if(q.connection) {
+    addConnection(q.connection);
+  }
+
+  // Key reveal
+  if(q.isKey || (q.clue && q.clue.includes('REVELAÇÃO'))) {
+    G.keyReveals.add(`${name}-${qi}`);
+  }
+
+  // Mark button asked
+  const btns = document.querySelectorAll('.q-btn');
+  btns.forEach((btn,i)=>{
+    if(i===qi) {btn.classList.add('asked');btn.disabled=true;btn.onclick=null;}
+  });
+
+  // Add answer
+  const area = document.getElementById('answers-area');
+  if(area) {
+    const div = document.createElement('div');
+    div.innerHTML = buildAnswerHtml(name,q,qi,cfg);
+    area.prepend(div.firstElementChild);
+  }
+
+  // Update char counter
+  const cic = document.getElementById(`cic-${name}`);
+  const total = interro.questions.length;
+  const asked = G.questionsAsked[name].size;
+  if(cic) cic.textContent = `${asked}/${total} perguntas`;
+
+  updateSuspectMeters();
+  updateProgress();
+
+  if(q.clue) showToast(`💡 Nova pista: ${name}`);
+
+  // Special: Pollyana reveals letters
+  if(name==='Pollyana' && qi===4) {
+    setTimeout(()=>showToast('🚨 REVELAÇÃO IMPORTANTE: Duarte recebia ameaças! Verifique o quarto!'),800);
+  }
+}
+
+function updateAlibiStatus(name, status) {
+  const el = document.getElementById(`alibi-${name}`);
+  const tag = document.getElementById(`at-${name}`);
+  if(!el||!tag) return;
+  if(status==='lied'){
+    tag.textContent='Mentiu!';tag.className='alibi-tag lied';
+    el.classList.add('suspect');
+    // badge on char card
+    let badge = document.getElementById(`cc-${name}`)?.querySelector('.char-badge');
+    if(!badge){badge=document.createElement('div');badge.className='char-badge suspect';
+      document.getElementById(`cc-${name}`)?.querySelector('.char-card-banner')?.appendChild(badge);}
+    badge.textContent='MENTIU';badge.className='char-badge suspect';
+  } else if(status==='cleared'){
+    tag.textContent='Álibi ok';tag.className='alibi-tag ok';
+    el.classList.add('cleared');
+  }
+}
+
+function addConnection(conn) {
+  const key = conn.chars.sort().join('-');
+  if(G.connections.has(key)) return;
+  G.connections.add(key);
+  const list = document.getElementById('connections-list');
+  const empty = list.querySelector('div[style]');
+  if(empty) empty.remove();
+  const d = document.createElement('div');
+  d.className='connection-item';
+  d.innerHTML=`<div class="conn-names">${conn.chars.join(' ↔ ')}</div><div class="conn-desc">${conn.desc}</div>`;
+  list.appendChild(d);
+}
+
+// ════════════════════════════════════════════════════════════
+//  SUSPECT METERS
+// ════════════════════════════════════════════════════════════
+const VERDICTS_SCALE = [
+  [0,'Sem evidências'],[15,'Improvável'],[30,'Leve suspeita'],
+  [50,'Suspeito moderado'],[70,'Fortemente suspeito'],
+  [90,'Principal suspeito'],[110,'Quase certeza'],
+];
+
+function updateSuspectMeters() {
+  const max = Math.max(...Object.values(G.suspicion),1);
+  let topName='';let topVal=0;
+  Object.entries(G.suspicion).forEach(([name,val])=>{
+    const pct = Math.min(100,Math.round((val/Math.max(max,100))*100));
+    const fill=document.getElementById(`srf-${name}`);
+    const pts=document.getElementById(`srp-${name}`);
+    const verd=document.getElementById(`srv-${name}`);
+    if(fill)fill.style.width=pct+'%';
+    if(pts)pts.textContent=val+'pts';
+    if(verd){
+      const v=[...VERDICTS_SCALE].reverse().find(x=>val>=x[0]);
+      verd.textContent=v?v[1]:'Sem dados';
+    }
+    if(val>topVal){topVal=val;topName=name;}
+    // Update char badge if high
+    if(val>=80){
+      const cc=document.getElementById(`cc-${name}`);
+      if(cc){
+        let badge=cc.querySelector('.char-badge:not(.suspect)');
+        if(!badge){badge=document.createElement('div');badge.className='char-badge suspect';
+          cc.querySelector('.char-card-banner')?.appendChild(badge);}
+        if(!badge.classList.contains('suspect')){badge.className='char-badge suspect';badge.textContent='SUSPEITO';}
+      }
+    }
+  });
+  if(topName){
+    const el=document.getElementById('stat-certeza');
+    if(el)el.textContent=topName;
+  }
+  updateTopStats();
+}
+
+// ════════════════════════════════════════════════════════════
+//  PROGRESS & PHASE
+// ════════════════════════════════════════════════════════════
+function updateProgress() {
+  let done=0;
+  PROGRESS_ITEMS_DEF.forEach(p=>{
+    const ok=p.check();
+    if(ok)done++;
+    const el=document.getElementById(`pgc-${p.id}`);
+    if(el)el.textContent=ok?'✓':'○';
+  });
+
+  // Phase progression
+  if(done>=2 && G.phase===1){
+    G.phase=2;
+    updatePhase('FASE II — INVESTIGAÇÃO',
+      '🔎',
+      'As primeiras pistas vieram à tona. Aprofunde os interrogatórios e confronte os suspeitos com evidências.');
+  }
+  if(done>=5 && G.phase===2){
+    G.phase=3;
+    updatePhase('FASE III — CONFRONTO',
+      '⚡',
+      'Você tem evidências suficientes. Confronte os suspeitos mais fortes. Detecte as últimas mentiras. Prepare-se para a acusação.');
+  }
+
+  // Show accuse button
+  if(done>=4) {
+    document.getElementById('btn-accuse').classList.add('visible');
+  }
+
+  updateTopStats();
+}
+
+function updatePhase(title, icon, text) {
+  document.getElementById('tb-phase').textContent = title;
+  const banner=document.getElementById('phase-banner');
+  if(banner){
+    banner.querySelector('.phase-banner-icon').textContent=icon;
+    banner.querySelector('.phase-banner-title').textContent=title;
+    banner.querySelector('.phase-banner-text').textContent=text;
+  }
+}
+
+function updateTopStats() {
+  document.getElementById('stat-pistas').textContent=G.cluesFound.size;
+  document.getElementById('stat-interr').textContent=G.charsInterrogated.size+'/8';
+  document.getElementById('stat-mentiras').textContent=G.liesDetected.size;
+}
+
+// ════════════════════════════════════════════════════════════
+//  ACCUSATION
+// ════════════════════════════════════════════════════════════
+function openAccusation() {
+  document.getElementById('game').style.display='none';
+  const screen=document.getElementById('accusation-screen');
+  screen.style.display='block';
+  screen.style.animation='fadeIn .4s ease';
+
+  const sorted = Object.entries(G.suspicion).sort((a,b)=>b[1]-a[1]);
+
+  document.getElementById('accusation-form').innerHTML=`
+    <div class="acc-field">
+      <div class="acc-field-label">Quem você acusa pelo roubo do testamento?</div>
+      <div class="acc-options" id="acc-culpado">
+        ${sorted.map(([name])=>{
+          const cfg=CHARACTERS[name];
+          return `<button class="acc-option" onclick="selectAcc('culpado','${name}',this)">
+            ${cfg.emoji} ${name}
+          </button>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <div class="acc-field">
+      <div class="acc-field-label">Qual era o motivo?</div>
+      <div class="acc-options" id="acc-motivo">
+        <button class="acc-option" onclick="selectAcc('motivo','heranca',this)">Herança em risco — perder tudo</button>
+        <button class="acc-option" onclick="selectAcc('motivo','segredo',this)">Segredo comprometedor no documento</button>
+        <button class="acc-option" onclick="selectAcc('motivo','vinganca',this)">Vingança familiar</button>
+        <button class="acc-option" onclick="selectAcc('motivo','protecao',this)">Proteger outro herdeiro</button>
+        <button class="acc-option" onclick="selectAcc('motivo','divida',this)">Dívida desesperada — falta de dinheiro</button>
+      </div>
+    </div>
+
+    <div class="acc-field">
+      <div class="acc-field-label">Como o testamento foi acessado?</div>
+      <div class="acc-options" id="acc-metodo">
+        <button class="acc-option" onclick="selectAcc('metodo','combinacao',this)">Combinação do cofre principal obtida antes</button>
+        <button class="acc-option" onclick="selectAcc('metodo','chave',this)">Chave duplicada + cópia na caixa da adega</button>
+        <button class="acc-option" onclick="selectAcc('metodo','cumplicidade',this)">Cumplicidade — dois envolvidos</button>
+        <button class="acc-option" onclick="selectAcc('metodo','acidente',this)">Encontrou acidentalmente</button>
+      </div>
+    </div>
+
+    <div class="acc-summary" id="acc-summary">
+      Selecione acusado, motivo e método para confirmar.
+    </div>
+
+    <div class="acc-note">
+      Pistas coletadas: <strong>${G.cluesFound.size}</strong> &nbsp;·&nbsp;
+      Mentiras detectadas: <strong>${G.liesDetected.size}</strong> &nbsp;·&nbsp;
+      Interrogações: <strong>${G.charsInterrogated.size}/8</strong> &nbsp;·&nbsp;
+      Revelações-chave: <strong>${G.keyReveals.size}</strong><br>
+      <em>Esta decisão é irreversível. A acusação será julgada pelas evidências reais do caso.</em>
+    </div>
+
+    <button class="btn-confirm" id="btn-confirm" onclick="confirmAccusation()" disabled>
+      ⚖ CONFIRMAR ACUSAÇÃO FORMAL
+    </button>
+  `;
+}
+
+function selectAcc(field, value, btn) {
+  const container=document.getElementById(`acc-${field}`);
+  container.querySelectorAll('.acc-option').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  G.accusationData[field]=value;
+  updateAccSummary();
+  const {culpado,motivo,metodo}=G.accusationData;
+  if(culpado&&motivo&&metodo) document.getElementById('btn-confirm').disabled=false;
+}
+
+function updateAccSummary() {
+  const {culpado,motivo,metodo}=G.accusationData;
+  const el=document.getElementById('acc-summary');
+  if(!el) return;
+  if(culpado||motivo||metodo){
+    el.innerHTML=`<strong>Sua acusação:</strong> ${culpado||'?'} &nbsp;|&nbsp; ${motivo||'?'} &nbsp;|&nbsp; ${metodo||'?'}`;
+  }
+}
+
+function confirmAccusation() {
+  document.getElementById('accusation-screen').style.display='none';
+  showEnding();
+}
+
+// ════════════════════════════════════════════════════════════
+//  ENDING
+// ════════════════════════════════════════════════════════════
+function showEnding() {
+  const screen=document.getElementById('ending-screen');
+  screen.style.display='block';
+  const wrap=document.getElementById('ending-wrap');
+  const {culpado,motivo,metodo}=G.accusationData;
+
+  let storyKey,type;
+  if(culpado==='Carluz'){
+    if(motivo===TRUTH.motivo && metodo===TRUTH.metodo){storyKey='Carluz_perfeito';type='correct';}
+    else if(motivo!==TRUTH.motivo){storyKey='Carluz_motivo_errado';type='partial';}
+    else{storyKey='Carluz_metodo_errado';type='partial';}
+  } else if(culpado==='Joy'){storyKey='Joy';type='wrong';}
+  else if(culpado==='Mary'){storyKey='Mary';type='wrong';}
+  else{storyKey='other';type='wrong';}
+
+  const story=TRUTH.story[storyKey];
+  const stampText=type==='correct'?'✦ CASO RESOLVIDO COM MAESTRIA ✦':type==='partial'?'◐ QUASE — ACUSADO CERTO':' ✗ ACUSAÇÃO INCORRETA';
+  const stampClass=type;
+
+  // Score
+  const clueScore=Math.min(40,G.cluesFound.size*2.5);
+  const lieScore=Math.min(25,G.liesDetected.size*6);
+  const interrScore=Math.min(20,G.charsInterrogated.size*2.5);
+  const keyScore=Math.min(15,G.keyReveals.size*5);
+  const resultScore=type==='correct'?20:type==='partial'?10:0;
+  const total=Math.round(clueScore+lieScore+interrScore+keyScore+resultScore);
+
+  const ranks=[
+    [90,'Sherlock Holmes'],
+    [75,'Hércule Poirot'],
+    [60,'Miss Marple'],
+    [45,'Inspetor Morse'],
+    [30,'Sam Spade'],
+    [0,'Detetive Novato'],
+  ];
+  const rank=ranks.find(r=>total>=r[0]);
+
+  // Truth comparison
+  const cOk=culpado===TRUTH.culpado;
+  const mOk=motivo===TRUTH.motivo;
+  const meOk=metodo===TRUTH.metodo;
+
+  wrap.innerHTML=`
+    <div class="ending-stamp ${stampClass}">${stampText}</div>
+
+    <div class="ending-paper">
+      <div class="ending-headline">${story.headline}</div>
+      <div class="ending-story">
+        ${story.text.map(p=>`<p>${p}</p>`).join('')}
+      </div>
+
+      <div class="ending-reveal">
+        <div class="ending-reveal-title">Sua Acusação vs. A Verdade</div>
+        <div class="truth-grid">
+          <div class="truth-item">
+            <div class="truth-label">Culpado</div>
+            <div class="truth-val" style="color:${cOk?'#50d890':'var(--red3)'}">
+              ${culpado || '—'}<br>
+              <span style="font-size:10px;color:var(--ink3)">(Real: Carluz)</span>
+            </div>
+          </div>
+          <div class="truth-item">
+            <div class="truth-label">Motivo</div>
+            <div class="truth-val" style="color:${mOk?'#50d890':'var(--red3)'}">
+              ${motivo || '—'}<br>
+              <span style="font-size:10px;color:var(--ink3)">(Real: Dívida)</span>
+            </div>
+          </div>
+          <div class="truth-item">
+            <div class="truth-label">Método</div>
+            <div class="truth-val" style="color:${meOk?'#50d890':'var(--red3)'}">
+              ${metodo || '—'}<br>
+              <span style="font-size:10px;color:var(--ink3)">(Real: Chave)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rank-display">
+      <div class="rank-title">${rank?rank[1]:'Detetive'}</div>
+      <div class="rank-label">Sua Classificação</div>
+    </div>
+
+    <div class="score-grid">
+      <div class="score-item">
+        <div class="score-val">${total}</div>
+        <div class="score-lbl">Pontuação Final</div>
+      </div>
+      <div class="score-item">
+        <div class="score-val">${G.cluesFound.size}/${ROOMS.reduce((a,r)=>a+r.clues.length,0)}</div>
+        <div class="score-lbl">Pistas</div>
+      </div>
+      <div class="score-item">
+        <div class="score-val">${G.liesDetected.size}</div>
+        <div class="score-lbl">Mentiras</div>
+      </div>
+      <div class="score-item">
+        <div class="score-val">${G.charsInterrogated.size}/8</div>
+        <div class="score-lbl">Interrogações</div>
+      </div>
+    </div>
+
+    <button class="btn-restart" onclick="restartGame()">↺ NOVO CASO — REINICIAR</button>
+  `;
+}
+
+// ════════════════════════════════════════════════════════════
+//  UTILS
+// ════════════════════════════════════════════════════════════
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function handleOverlayClick(e) {
+  if(e.target===document.getElementById('modal-overlay')) closeModal();
+}
+
+let _toastTimer;
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  document.getElementById('toast-text').textContent=msg;
+  t.style.display='flex';t.style.opacity='1';t.style.transform='none';
+  clearTimeout(_toastTimer);
+  _toastTimer=setTimeout(()=>{
+    t.style.transition='opacity .4s';t.style.opacity='0';
+    setTimeout(()=>{t.style.display='none';t.style.transition='';},400);
+  },3500);
+}
+
+function restartGame() {
+  G={
+    cluesFound:new Set(),roomsVisited:new Set(),
+    charsInterrogated:new Set(),questionsAsked:{},
+    suspicion:{Pollyana:0,Carluz:0,Eros:0,Stephany:0,Mary:0,Mel:0,Joy:0,Ellie:0},
+    liesDetected:new Set(),connections:new Set(),
+    timelineEntries:[],accusationData:{culpado:'',motivo:'',metodo:''},
+    phase:1,keyReveals:new Set(),
+  };
+  document.getElementById('ending-screen').style.display='none';
+  document.getElementById('game').style.display='block';
+  document.getElementById('btn-accuse').classList.remove('visible');
+  document.getElementById('tb-phase').textContent='FASE I — CHEGADA';
+  document.getElementById('evidence-list').innerHTML='<div style="font-size:12px;font-style:italic;color:var(--ink4)">Nenhuma evidência ainda.<br>Investigue os cômodos.</div>';
+  document.getElementById('timeline-list').innerHTML='<div style="font-size:11px;font-style:italic;color:var(--ink4)">Construída à medida que você investiga...</div>';
+  document.getElementById('connections-list').innerHTML='<div style="font-size:11px;font-style:italic;color:var(--ink4)">Descobertas ao interrogar...</div>';
+  document.getElementById('notes-area').value='';
+  document.getElementById('theory-culpado').value='';
+  document.getElementById('theory-motivo').value='';
+  document.getElementById('theory-metodo').value='';
+  const phaseBanner=document.getElementById('phase-banner');
+  if(phaseBanner){
+    phaseBanner.querySelector('.phase-banner-icon').textContent='🏛️';
+    phaseBanner.querySelector('.phase-banner-title').textContent='Fase I — A Chegada';
+    phaseBanner.querySelector('.phase-banner-text').textContent='Comece investigando os cômodos da villa e interrogando os herdeiros. As primeiras pistas revelarão quem tinha acesso ao cofre.';
+  }
+  buildAlibiList();
+  buildRoomsGrid();
+  buildCharsGrid();
+  buildSuspectMeters();
+  buildProgressList();
+  updateTopStats();
+}
+</script>
+</body>
+</html>
